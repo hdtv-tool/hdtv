@@ -24,7 +24,17 @@
 #define __View_h__
 
 #include <TGFrame.h>
-#include <TGX11.h>
+#include <TVirtualX.h>
+
+// These defines seem to be missing on some systems (e.g. MAC OSX/darwin)
+#ifndef M_SQRT2
+#define M_SQRT2 1.4142135623730950488016887
+#endif
+
+#ifndef M_SQRT1_2
+#define M_SQRT1_2 0.70710678118654752440
+#endif
+
 
 namespace HDTV {
 namespace Display {

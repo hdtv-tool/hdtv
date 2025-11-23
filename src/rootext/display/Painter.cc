@@ -22,7 +22,7 @@
 
 #include "Painter.hh"
 
-#include <TGX11.h>
+#include <TVirtualX.h>
 
 #include "DisplayFunc.hh"
 #include "DisplaySpec.hh"

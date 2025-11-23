@@ -16,7 +16,6 @@ set(SOURCES
     Viewer.cc
     XMarker.cc
     YMarker.cc
-    ../calibration/Calibration.cc
 )
 
 set(HEADERS
@@ -36,7 +35,6 @@ set(HEADERS
     View.hh
     XMarker.hh
     YMarker.hh
-    ../calibration/Calibration.hh
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../calibration)
@@ -49,7 +47,7 @@ if (UNIX AND NOT APPLE)
     target_compile_definitions(${MODULE} PRIVATE -DUSE_X11)
     target_link_libraries(${MODULE} PUBLIC ROOT::Core ROOT::Hist ROOT::Graf ROOT::Gui X11 calibration)
 else()
-    target_link_libraries(${MODULE} PUBLIC ROOT::Core ROOT::Hist ROOT::Graf ROOT::Gui)
+    target_link_libraries(${MODULE} PUBLIC ROOT::Core ROOT::Hist ROOT::Graf ROOT::Gui calibration)
 endif()
 
 set_target_properties(${MODULE} PROPERTIES RESOURCE

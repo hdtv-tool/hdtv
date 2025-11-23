@@ -58,7 +58,7 @@ public:
 
 protected:
   void UpdateScrollbar();
-  Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t) override;
+  Bool_t ProcessMessage(Longptr_t msg, Longptr_t parm1, Longptr_t) override;
   Bool_t HandleKey(Event_t *ev) override;
 
 protected:

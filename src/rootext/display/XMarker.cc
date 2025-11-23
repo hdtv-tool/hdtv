@@ -21,8 +21,7 @@
  */
 
 #include "XMarker.hh"
-#include <TGX11.h>
-
+#include <TVirtualX.h>
 namespace HDTV {
 namespace Display {
 

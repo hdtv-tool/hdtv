@@ -21,11 +21,13 @@
  */
 
 #include "View2D.hh"
+#include <TVirtualX.h>
 
-#include <iostream>
+#ifdef USE_X11
+#include <X11/Xlib.h>
+#endif
 
 #include <KeySymbols.h>
-#include <X11/Xlib.h>
 
 #include <TGStatusBar.h>
 #include <TH2.h>
@@ -304,6 +306,7 @@ int View2D::GetValueAtPixel(int x, int y) {
   return ZCtsToScr(z);
 }
 
+#ifdef USE_X11
 Pixmap_t View2D::RenderTile(int xoff, int yoff) {
   int x, y, z;
   int r, g, b;
@@ -374,6 +377,46 @@ Pixmap_t View2D::RenderTile(int xoff, int yoff) {
   return pixmap;
 }
 
+#else
+Pixmap_t View2D::RenderTile(int xoff, int yoff) {
+  
+  int x, y, z;
+  int r, g, b;
+  Pixmap_t pixmap;
+  unsigned char* img;
+  ULong_t pixel;
+  unsigned long r_mask, g_mask, b_mask;
+  int r_shift, g_shift, b_shift;
+
+  img = new unsigned char[cTileSize * cTileSize * 4];
+
+
+  for (y = 0; y < cTileSize; y++) {
+    for (x = 0; x < cTileSize; x++) {
+      z = GetValueAtPixel(x + xoff * cTileSize, -(y + yoff * cTileSize));
+      ZtoRGB(z, r, g, b);
+      img[y*4*cTileSize + x*4 + 0] = b;
+      img[y*4*cTileSize + x*4 + 1] = g;
+      img[y*4*cTileSize + x*4 + 2] = r;
+      img[y*4*cTileSize + x*4 + 3] = 0;
+    }
+  }
+
+  pixmap = gVirtualX->CreatePixmapFromData(img, cTileSize, cTileSize);
+
+  if (fDarkMode) {
+    gVirtualX->FillRectangle(pixmap, GetWhiteGC()(), 0, 0, cTileSize, cTileSize);
+  } else {
+    gVirtualX->FillRectangle(pixmap, GetBlackGC()(), 0, 0, cTileSize, cTileSize);
+  }
+  delete img;
+
+  RenderCuts(xoff, yoff, pixmap);
+
+  return pixmap;
+}
+#endif
+
 void View2D::RenderCuts(int xoff, int yoff, Pixmap_t pixmap) {
   for (auto &cut : fCuts) {
     RenderCut(cut, xoff, yoff, pixmap);
@@ -413,10 +456,16 @@ void View2D::RenderCut(const DisplayCut &cut, int xoff, int yoff, Pixmap_t pixma
                            x1, y2, x2-x1, y1-y2); */
 }
 
+#ifdef USE_X11
 void View2D::DrawPolyLine(Drawable_t id, GContext_t gc, Int_t n, short *points) {
   XDrawLines(reinterpret_cast<::Display *>(gVirtualX->GetDisplay()), static_cast<Drawable>(id),
              reinterpret_cast<GC>(gc), reinterpret_cast<XPoint *>(points), n, CoordModeOrigin);
 }
+#else
+void View2D::DrawPolyLine(Drawable_t id, GContext_t gc, Int_t n, short *points) {
+  // TODO: Figure it out
+}
+#endif
 
 template <typename ContainerT, typename Cond> void erase_if(ContainerT &container, Cond cond) {
   auto it = container.begin();

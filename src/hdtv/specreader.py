@@ -247,15 +247,15 @@ class SpecReader:
             txtio = TextSpecReader(subfmt)
             return txtio.GetSpectrum(fname, histname, histtitle)
         else:
-            mhist = ROOT.MFileHist()
+            mhist = hdtv.rootext.mfile.MFileHist()
 
             if not fmt or fmt.lower() == "mfile":
-                result = mhist.Open(fname)
+                result = mhist.open(fname)
             else:
-                result = mhist.Open(fname, fmt)
+                result = mhist.open(fname, fmt)
 
-            if result != ROOT.MFileHist.ERR_SUCCESS:
-                raise SpecReaderError(mhist.GetErrorMsg())
+            if result != hdtv.rootext.mfile.MFileHist.ERR_SUCCESS:
+                raise SpecReaderError(mhist.get_error_msg())
 
             # Get spectra out of Mfile Mat structure
             # Use the spectra given by line
@@ -266,9 +266,9 @@ class SpecReader:
                 level = 0
                 hdtv.ui.msg("Using spectra in line " + str(line))
 
-            hist = mhist.ToTH1D(histname, histtitle, level, line)
+            hist = mhist.to_TH1D(histname, histtitle, level, line)
             if not hist:
-                raise SpecReaderError(mhist.GetErrorMsg())
+                raise SpecReaderError(mhist.get_error_msg())
             return hist
 
     @staticmethod
@@ -278,18 +278,18 @@ class SpecReader:
         if histtitle is None:
             histtitle = os.path.basename(fname)
 
-        mhist = ROOT.MFileHist()
+        mhist = hdtv.rootext.mfile.MFileHist()
 
         # FIXME: error handling
         if not fmt or fmt.lower() == "mfile":
-            mhist.Open(fname)
+            mhist.open(fname)
         else:
-            mhist.Open(fname, fmt)
+            mhist.open(fname, fmt)
 
         # FIXME: this ignores possibly specified bin errors
-        hist = mhist.ToTH2D(histname, histtitle, 0)
+        hist = mhist.to_TH2D(histname, histtitle, 0)
         if not hist:
-            raise SpecReaderError(mhist.GetErrorMsg())
+            raise SpecReaderError(mhist.get_error_msg())
         return hist
 
     @staticmethod
@@ -303,19 +303,19 @@ class SpecReader:
         if histtitle is None:
             histtitle = os.path.basename(fname)
 
-        mhist = ROOT.MFileHist()
+        mhist = hdtv.rootext.mfile.MFileHist()
 
         # FIXME: error handling
         if not fmt or fmt.lower() == "mfile":
-            mhist.Open(fname)
+            mhist.open(fname)
         else:
-            mhist.Open(fname, fmt)
+            mhist.open(fname, fmt)
 
         # FIXME: this ignores possibly specified bin errors
-        return ROOT.MFMatrix(mhist, 0)
+        return hdtv.rootext.mfile.MFMatrix(mhist, 0)
 
     @staticmethod
     def WriteSpectrum(hist, fname, fmt):
-        result = ROOT.MFileHist.WriteTH1(hist, fname, fmt)
-        if result != ROOT.MFileHist.ERR_SUCCESS:
-            raise SpecReaderError(ROOT.MFileHist.GetErrorMsg(result))
+        result = hdtv.rootext.mfile.MFileHist.write_TH1(hist, fname, fmt)
+        if result != hdtv.rootext.mfile.MFileHist.ERR_SUCCESS:
+            raise SpecReaderError(hdtv.rootext.mfile.MFileHist.get_error_msg_static(result))

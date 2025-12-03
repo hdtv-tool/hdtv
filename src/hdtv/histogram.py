@@ -744,22 +744,22 @@ class MHisto2D(Histo2D):
             othercal = self._xproj.cal
             matrix = self.vmatrix
 
-        matrix.ResetRegions()
+        matrix.reset_regions()
 
         for r in regionMarkers:
             # FIXME: The region markers are not used correctly in many parts
             # of the code. Workaround by explicitly using the cal here
-            b1 = matrix.FindCutBin(thiscal.E2Ch(r.p1.pos_cal))
-            b2 = matrix.FindCutBin(thiscal.E2Ch(r.p2.pos_cal))
-            matrix.AddCutRegion(b1, b2)
+            b1 = matrix.find_cut_bin(thiscal.E2Ch(r.p1.pos_cal))
+            b2 = matrix.find_cut_bin(thiscal.E2Ch(r.p2.pos_cal))
+            matrix.add_cut_region(b1, b2)
 
         for b in bgMarkers:
-            b1 = matrix.FindCutBin(thiscal.E2Ch(b.p1.pos_cal))
-            b2 = matrix.FindCutBin(thiscal.E2Ch(b.p2.pos_cal))
-            matrix.AddBgRegion(b1, b2)
+            b1 = matrix.find_cut_bin(thiscal.E2Ch(b.p1.pos_cal))
+            b2 = matrix.find_cut_bin(thiscal.E2Ch(b.p2.pos_cal))
+            matrix.add_bg_region(b1, b2)
 
         name = self.filename + "_cut"
-        rhist = matrix.Cut(name, name)
+        rhist = matrix.cut(name, name)
         # Ensure proper garbage collection for ROOT histogram objects
         ROOT.SetOwnership(rhist, True)
 
@@ -795,9 +795,9 @@ class MHisto2D(Histo2D):
                 pry_fname = ""
 
         if prx_fname or pry_fname:
-            errno = ROOT.MatOp.Project(fname, prx_fname, pry_fname)
-            if errno != ROOT.MatOp.ERR_SUCCESS:
-                raise RuntimeError("Project: " + ROOT.MatOp.GetErrorString(errno))
+            errno = hdtv.rootext.mfile.MatOp.project(fname, prx_fname, pry_fname)
+            if errno != hdtv.rootext.mfile.MatOp.ERR_SUCCESS:
+                raise RuntimeError("Project: " + hdtv.rootext.mfile.MatOp.get_error_string(errno))
 
             if prx_fname:
                 hdtv.ui.info("Generated x projection: %s" % prx_fname)
@@ -810,7 +810,7 @@ class MHisto2D(Histo2D):
             if os.path.exists(trans_fname):
                 hdtv.ui.info("Using %s for transpose" % trans_fname)
             else:
-                errno = ROOT.MatOp.Transpose(fname, trans_fname)
-                if errno != ROOT.MatOp.ERR_SUCCESS:
-                    raise RuntimeError("Transpose: " + ROOT.MatOp.GetErrorString(errno))
+                errno = hdtv.rootext.mfile.MatOp.transpose(fname, trans_fname)
+                if errno != hdtv.rootext.mfile.MatOp.ERR_SUCCESS:
+                    raise RuntimeError("Transpose: " + hdtv.rootext.mfile.MatOp.get_error_string(errno))
                 hdtv.ui.info("Generated transpose: %s" % trans_fname)

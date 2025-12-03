@@ -2,6 +2,15 @@
 import os
 import sys
 
+try:
+    import ROOT # noqa: F401, I001
+except ModuleNotFoundError:
+    raise ImportError('''
+        Failed to import PyROOT. Make sure that ROOT is installed correctly.
+        "For information on how to install ROOT and PyROOT follow the
+        instructions in the README.md
+    ''')
+
 modules = ["mfile-root", "fit", "calibration", "display"]
 
 libfmt = {

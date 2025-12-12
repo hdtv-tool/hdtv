@@ -1,0 +1,20 @@
+site_name: "Doc"
+docs_dir: docs
+plugins:
+  - search
+  - same-dir
+  - mkdoxy:
+      projects:
+        hdtv-py:
+          src-dirs: "./src/hdtv/"
+          full-doc: True
+          doxy-cfg:
+            RECURSIVE: True
+            FILE_PATTERNS: "*.py"
+        hdtv-c:
+          src-dirs: "./src/rootext/calibration , ./src/rootext/display ,./src/rootext/fit , ./src/rootext/mfile-root"
+          full-doc: True
+          doxy-cfg:
+            RECURSIVE: False
+            FILE_PATTERNS: "*.cc, *.h*"
+

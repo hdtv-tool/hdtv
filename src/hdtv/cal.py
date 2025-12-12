@@ -248,7 +248,7 @@ class CalibrationFitter:
 
         s = "<b>Calibration</b>: "
         s += " ".join([escape("%.6e") % x for x in self.calib.GetCoeffs()])
-        s += "\n<b>Chi²</b>: %.4f" % self.chi2
+        s += f"\n<b>Chi²</b>: {self.chi2:.4f}"
 
         return s
 
@@ -268,10 +268,10 @@ class CalibrationFitter:
             e_fit = self.calib.Ch2E(ch.nominal_value)
             residual = e_given - e_fit
 
-            tableline["channel"] = "%10.2f" % ch.nominal_value
-            tableline["e_given"] = "%10.2f" % e_given.nominal_value
-            tableline["e_fit"] = "%10.2f" % e_fit
-            tableline["residual"] = "%10.2f" % residual.nominal_value
+            tableline["channel"] = f"{ch.nominal_value:10.2f}"
+            tableline["e_given"] = f"{e_given.nominal_value:10.2f}"
+            tableline["e_fit"] = f"{e_fit:10.2f}"
+            tableline["residual"] = f"{residual.nominal_value:10.2f}"
             tabledata.append(tableline)
 
         return hdtv.util.Table(tabledata, keys, header=header, sortBy="channel")

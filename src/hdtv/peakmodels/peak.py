@@ -48,29 +48,29 @@ class PeakModel:
         for name, status in self.fParStatus.items():
             # Short format for multiple values...
             if isinstance(status, list):
-                statstr += "%s: " % name
+                statstr += f"{name}: "
                 sep = ""
                 for stat in status:
                     statstr += sep
                     if stat in ("free", "equal", "hold", "none", "calculated"):
                         statstr += stat
                     else:
-                        statstr += "%.3f" % stat
+                        statstr += f"{stat:.3f}"
                     sep = ", "
                 statstr += "\n"
 
             # ... long format for a single value
             else:
                 if status == "free":
-                    statstr += "%s: (individually) free\n" % name
+                    statstr += f"{name}: (individually) free\n"
                 elif status == "equal":
-                    statstr += "%s: free and equal\n" % name
+                    statstr += f"{name}: free and equal\n"
                 elif status == "hold":
-                    statstr += "%s: held at default value\n" % name
+                    statstr += f"{name}: held at default value\n"
                 elif status == "none":
-                    statstr += "%s: none (disabled)\n" % name
+                    statstr += f"{name}: none (disabled)\n"
                 elif status == "calculated":
-                    statstr += "%s: calculated from fit result\n" % name
+                    statstr += f"{name}: calculated from fit result\n"
                 else:
                     statstr += f"{name}: fixed at {status:.3f}\n"
 
@@ -87,7 +87,7 @@ class PeakModel:
         """
         for parname, status in self.fParStatus.items():
             if isinstance(status, list) and len(status) < minlen:
-                raise ValueError("Not enough values for status of %s" % parname)
+                raise ValueError(f"Not enough values for status of {parname}")
 
     def ParseParamStatus(self, parname, status):
         """
@@ -129,7 +129,7 @@ class PeakModel:
         try:
             val = float(status)
         except ValueError:
-            msg = "Failed to parse status specifier `%s'" % status
+            msg = f"Failed to parse status specifier `{status}'"
             raise ValueError(msg)
         return val
 

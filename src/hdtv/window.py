@@ -192,10 +192,10 @@ class KeyHandler(HotkeyList):
 
             if handled is None:
                 self.keyString += keyStr
-                self.viewport.SetStatusText("Command: %s" % self.keyString)
+                self.viewport.SetStatusText(f"Command: {self.keyString}")
             elif not handled:
                 self.keyString += keyStr
-                self.viewport.SetStatusText("Invalid hotkey %s" % self.keyString)
+                self.viewport.SetStatusText(f"Invalid hotkey {self.keyString}")
                 self.keyString = ""
             else:
                 if not self.fEditMode:
@@ -423,11 +423,11 @@ class Window(KeyHandler):
         # check the input
         if xytype not in ["X", "Y"]:
             hdtv.ui.error(
-                "invalid parameter %s to the private function _Expand" % xytype
+                f"invalid parameter {xytype} to the private function _Expand"
             )
             return
 
-        zoomMarkers = getattr(self, "%sZoomMarkers" % xytype)
+        zoomMarkers = getattr(self, f"{xytype}ZoomMarkers")
         if len(zoomMarkers) == 1:
             zm = zoomMarkers[0]
             p1 = zm.p1.pos_cal
@@ -435,11 +435,11 @@ class Window(KeyHandler):
                 p2 = 0.0
             else:
                 p2 = zm.p2.pos_cal
-            setOffset = getattr(self.viewport, "Set%sOffset" % xytype)
+            setOffset = getattr(self.viewport, f"Set{xytype}Offset")
             setOffset(min(p1, p2))
-            setVisibleRegion = getattr(self.viewport, "Set%sVisibleRegion" % xytype)
+            setVisibleRegion = getattr(self.viewport, f"Set{xytype}VisibleRegion")
             setVisibleRegion(abs(p2 - p1))
-            getattr(self, "%sZoomMarkers" % xytype).pop()
+            getattr(self, f"{xytype}ZoomMarkers").pop()
         else:
             if xytype == "X":
                 self.viewport.ShowAll()

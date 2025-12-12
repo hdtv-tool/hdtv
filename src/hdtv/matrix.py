@@ -67,19 +67,19 @@ class Matrix(DrawableManager):
         """
         Return Projection along a given axis
         """
-        if getattr(self, "_%sproj" % axis) is None:
+        if getattr(self, f"_{axis}proj") is None:
             # no valid link to that projection, create fresh object
-            hist = getattr(self.histo2D, "%sproj" % axis)
+            hist = getattr(self.histo2D, f"{axis}proj")
             if self.sym:
                 a = "0"
             else:
                 a = axis
             proj = CutSpectrum(hist, self, axis=a)
             proj.color = self.color
-            setattr(self, "_%sproj" % axis, weakref(proj))
+            setattr(self, f"_{axis}proj", weakref(proj))
             return proj
         else:
-            return getattr(self, "_%sproj" % axis)
+            return getattr(self, f"_{axis}proj")
 
     def ExecuteCut(self, cut):
         cutHisto = self.histo2D.ExecuteCut(cut.regionMarkers, cut.bgMarkers, cut.axis)

@@ -65,11 +65,11 @@ class Cut(Drawable):
                 mtype = "bg"
             else:
                 mtype = "region"
-        markers = getattr(self, "%sMarkers" % mtype)
+        markers = getattr(self, f"{mtype}Markers")
         markers.SetMarker(pos)
 
     def RemoveMarker(self, mtype, pos):
-        markers = getattr(self, "%sMarkers" % mtype)
+        markers = getattr(self, f"{mtype}Markers")
         markers.RemoveNearest(pos)
 
     def ExecuteCut(self, matrix, axis):

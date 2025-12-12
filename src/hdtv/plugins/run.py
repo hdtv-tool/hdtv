@@ -34,7 +34,7 @@ def run(args):
     fname = os.path.expanduser(args[0])
     try:
         with open(fname) as f:
-            hdtv.ui.msg("Running script %s" % fname)
+            hdtv.ui.msg(f"Running script {fname}")
             exec(compile(f.read(), fname, "exec"))
             hdtv.ui.msg("Finished!")
     except OSError as err:

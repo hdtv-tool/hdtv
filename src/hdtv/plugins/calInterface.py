@@ -87,7 +87,7 @@ class EffCalIf:
             #    self.fit = True
             else:
                 raise hdtv.cmdline.HDTVCommandError(
-                    "No such efficiency function %s" % name
+                    f"No such efficiency function {name}"
                 )
         except IndexError:
             raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
@@ -656,7 +656,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         for ID in ids:
             self.effIf.SetFun(ID, eff_fun, parameter=pars)
@@ -674,7 +674,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         for ID in ids:
             self.effIf.ReadPar(ID, filename)
@@ -688,7 +688,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         for ID in ids:
             self.effIf.ReadCov(ID, filename)
@@ -702,7 +702,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         if len(ids) > 1:
             raise hdtv.cmdline.HDTVCommandError(
@@ -721,7 +721,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         if len(ids) > 1:
             raise hdtv.cmdline.HDTVCommandError(
@@ -738,7 +738,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         if len(ids) > 1:
             raise hdtv.cmdline.HDTVCommandError(
@@ -777,14 +777,14 @@ class EffCalHDTVInterface:
                         coefficients.append(float(argument[2]))
                     except BaseException:
                         raise hdtv.cmdline.HDTVCommandError(
-                            "Invalid coefficient %s." % str(argument[2])
+                            f"Invalid coefficient {argument[2]!s}."
                         )
                 else:
                     coefficients.append(None)
             try:
                 ids = hdtv.util.ID.ParseIds(ID, self.spectra)
             except ValueError:
-                raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % ID)
+                raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {ID}")
                 return
 
         self.effIf.Fit(
@@ -806,7 +806,7 @@ class EffCalHDTVInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args.spectrum, self.spectra)
         except ValueError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid ID %s" % args.spectrum)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid ID {args.spectrum}")
 
         self.effIf.List(ids)
 
@@ -899,7 +899,7 @@ class EnergyCalIf:
                 peak = fits[fid].peaks[pid]
             except (IndexError, KeyError):
                 fid.minor = pid
-                hdtv.ui.warning("Ignoring invalid peak id %s" % fid)
+                hdtv.ui.warning(f"Ignoring invalid peak id {fid}")
                 continue
             peak.extras["pos_lit"] = p[1]
             valid_pairs.add(peak.pos, p[1])
@@ -1337,7 +1337,7 @@ class EnergyCalHDTVInterface:
         )
 
         if not sids:
-            hdtv.ui.msg("calibration: %s" % hdtv.cal.PrintCal(cal))
+            hdtv.ui.msg(f"calibration: {hdtv.cal.PrintCal(cal)}")
             return True
         self.spectra.ApplyCalibration(sids, cal)
         return True
@@ -1452,7 +1452,7 @@ class EnergyCalHDTVInterface:
             self.spectra.ApplyCalibration(sids, cal)
         except ValueError:
             raise hdtv.cmdline.HDTVCommandError(
-                "Malformed calibration parameter file '%s'." % filename
+                f"Malformed calibration parameter file '{filename}'."
             )
         return True
 

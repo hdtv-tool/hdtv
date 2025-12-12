@@ -156,7 +156,7 @@ class FitMap:
                 except ValueError:
                     continue
                 except (KeyError, IndexError):
-                    hdtv.ui.warning("no peak with id %s" % args.args[i])
+                    hdtv.ui.warning(f"no peak with id {args.args[i]}")
 
     def FitPosErase(self, args):
         """
@@ -181,7 +181,7 @@ class FitMap:
                     # collect all peaks in this fit
                     pids.update(set(hdtv.util.ID.ParseIds("all", spec.dict[i])))
                 except KeyError:
-                    hdtv.ui.warning("no peak with id %s" % i.major)
+                    hdtv.ui.warning(f"no peak with id {i.major}")
                     continue
         for i in pids:
             pid = i.minor
@@ -230,7 +230,7 @@ class FitMap:
                     )
                     count += 1
         # give a feetback to the user
-        hdtv.ui.msg("Mapped %s energies to peaks" % count)
+        hdtv.ui.msg(f"Mapped {count} energies to peaks")
 
     def CalPosRecalibrate(self, args):
         if self.spectra.activeID is None:

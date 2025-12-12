@@ -201,11 +201,11 @@ class RootFileInterface:
         # a POSIX directory. If rfile is not None, we *changed* the ROOT file.
         if root_dir is None or rfile is not None:
             if self.rootfile is not None:
-                hdtv.ui.info("Closing old root file %s" % self.rootfile.GetName())
+                hdtv.ui.info(f"Closing old root file {self.rootfile.GetName()}")
                 self.rootfile.Close()
             self.rootfile = rfile
             if self.rootfile is not None:
-                hdtv.ui.info("Opened new root file %s" % self.rootfile.GetName())
+                hdtv.ui.info(f"Opened new root file {self.rootfile.GetName()}")
 
         if root_dir is not None:
             root_dir.cd()
@@ -262,7 +262,7 @@ class RootFileInterface:
         cut = self.GetObj(path)
 
         if cut is None or not isinstance(cut, ROOT.TCutG):
-            hdtv.ui.error("%s is not a ROOT cut (TCutG)" % path)
+            hdtv.ui.error(f"{path} is not a ROOT cut (TCutG)")
             return None
 
         return cut
@@ -283,7 +283,7 @@ class RootFileInterface:
             isinstance(hist, ROOT.TH2)
             or (isinstance(hist, ROOT.THnSparse) and hist.GetNdimensions() == 2)
         ):
-            hdtv.ui.error("%s is not a 2d histogram" % path)
+            hdtv.ui.error(f"{path} is not a 2d histogram")
             return None
 
         return hist
@@ -397,11 +397,11 @@ class RootFileInterface:
                                 spec.cal = self.caldict[spec.name]
                             except KeyError:
                                 hdtv.ui.warning(
-                                    "No calibration found for %s" % spec.name
+                                    f"No calibration found for {spec.name}"
                                 )
                 else:
-                    hdtv.ui.warning("%s is not a 1D histogram object" % obj.GetName())
-            hdtv.ui.msg("%d spectra loaded" % len(loaded))
+                    hdtv.ui.warning(f"{obj.GetName()} is not a 1D histogram object")
+            hdtv.ui.msg(f"{len(loaded)} spectra loaded")
             if args.invisible:
                 self.spectra.HideObjects(loaded)
             elif len(loaded) > 0:

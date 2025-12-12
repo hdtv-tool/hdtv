@@ -346,7 +346,7 @@ class Fit(Drawable):
         mtype  : "bg", "region", "peak"
         """
         self.spec = None
-        markers = getattr(self, "%sMarkers" % mtype)
+        markers = getattr(self, f"{mtype}Markers")
         if action == "set":
             markers.SetMarker(pos)
         if action == "remove":

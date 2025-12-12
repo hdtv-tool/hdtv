@@ -48,29 +48,29 @@ class BackgroundModel:
         for name, status in self.fParStatus.items():
             # Short format for multiple values...
             if isinstance(status, list):
-                statstr += "%s: " % name
+                statstr += f"{name}: "
                 sep = ""
                 for stat in status:
                     statstr += sep
                     if stat in ("free", "equal", "hold", "none", "calculated"):
                         statstr += stat
                     else:
-                        statstr += "%.3f" % stat
+                        statstr += f"{stat:.3f}"
                     sep = ", "
                 statstr += "\n"
 
             # ... long format for a single value
             else:
                 if status == "free":
-                    statstr += "%s: (individually) free\n" % name
+                    statstr += f"{name}: (individually) free\n"
                 elif status == "equal":
-                    statstr += "%s: free and equal\n" % name
+                    statstr += f"{name}: free and equal\n"
                 elif status == "hold":
-                    statstr += "%s: held at default value\n" % name
+                    statstr += f"{name}: held at default value\n"
                 elif status == "none":
-                    statstr += "%s: none (disabled)\n" % name
+                    statstr += f"{name}: none (disabled)\n"
                 elif status == "calculated":
-                    statstr += "%s: calculated from fit result\n" % name
+                    statstr += f"{name}: calculated from fit result\n"
                 else:
                     statstr += f"{name}: fixed at {status:.3f}\n"
 
@@ -105,7 +105,7 @@ class BackgroundModel:
         try:
             val = int(status)
         except ValueError:
-            msg = "Failed to parse status specifier `%s'" % status
+            msg = f"Failed to parse status specifier `{status}'"
             raise ValueError(msg)
 
         # Check if a numeric value is legal for the parameter

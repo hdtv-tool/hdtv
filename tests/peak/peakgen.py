@@ -210,10 +210,10 @@ def write_hist(hist, fname, include_x=False, include_err=False):
     axis = hist.GetXaxis()
     for bin in range(1, hist.GetNbinsX() + 1):
         if include_x:
-            f.write("%f " % axis.GetBinCenter(bin))
-        f.write("%f" % hist.GetBinContent(bin))
+            f.write(f"{axis.GetBinCenter(bin):f} ")
+        f.write(f"{hist.GetBinContent(bin):f}")
         if include_err:
-            f.write(" %f" % hist.GetBinError(bin))
+            f.write(f" {hist.GetBinError(bin):f}")
         f.write("\n")
 
     f.close()

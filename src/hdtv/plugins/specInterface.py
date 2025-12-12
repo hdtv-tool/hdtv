@@ -95,7 +95,7 @@ class SpecInterface:
         except ValueError:
             if self.window:
                 self.window.viewport.SetStatusText(
-                    "Invalid spectrum identifier: %s" % arg
+                    f"Invalid spectrum identifier: {arg}"
                 )
 
     def _HotkeyActivate(self, arg):
@@ -114,18 +114,18 @@ class SpecInterface:
                 self.spectra.ActivateObject(None)
                 if self.window:
                     self.window.viewport.SetStatusText(
-                        "Deactivated spectrum %s" % oldactive
+                        f"Deactivated spectrum {oldactive}"
                     )
             else:
                 ID = ids[0]
                 self.spectra.ActivateObject(ID)
                 if self.window:
                     self.window.viewport.SetStatusText(
-                        "Activated spectrum %s" % self.spectra.activeID
+                        f"Activated spectrum {self.spectra.activeID}"
                     )
         except ValueError:
             if self.window:
-                self.window.viewport.SetStatusText("Invalid id: %s" % arg)
+                self.window.viewport.SetStatusText(f"Invalid id: {arg}")
 
     def LoadSpectra(self, patterns, ID=None):
         """
@@ -159,10 +159,10 @@ class SpecInterface:
                 files = glob.glob(os.path.expanduser(fpat))
 
                 if len(files) == 0:
-                    hdtv.ui.warning("%s: no such file" % fpat)
+                    hdtv.ui.warning(f"{fpat}: no such file")
                 elif ID is not None and len(files) > 1:
                     raise hdtv.cmdline.HDTVCommandAbort(
-                        "pattern %s is ambiguous and you specified an ID" % fpat
+                        f"pattern {fpat} is ambiguous and you specified an ID"
                     )
                     break
 
@@ -247,7 +247,7 @@ class SpecInterface:
         spec = Spectrum(hist)
         spec.color = hdtv.color.ColorForID(copyTo.major)
         spec.typeStr = "spectrum, copy"
-        spec.name = "%s (copy)" % spec.name
+        spec.name = f"{spec.name} (copy)"
         if hist.cal:
             cal = copy.copy(hist.cal)
             self.caldict[spec.name] = cal
@@ -536,7 +536,7 @@ class TvSpecInterface:
                     raise hdtv.cmdline.HDTVCommandError("More than one ID given")
                 ID = ids[0]
             except ValueError as msg:
-                raise hdtv.cmdline.HDTVCommandError("Invalid ID: %s" % msg)
+                raise hdtv.cmdline.HDTVCommandError(f"Invalid ID: {msg}")
         else:
             ID = None
         self.specIf.LoadSpectra(patterns=args.pattern, ID=ID)
@@ -664,8 +664,7 @@ class TvSpecInterface:
         if args.specid is None:
             if self.spectra.activeID is not None:
                 msg = (
-                    "Using active spectrum %s for multiplication"
-                    % self.spectra.activeID
+                    f"Using active spectrum {self.spectra.activeID} for multiplication"
                 )
                 hdtv.ui.msg(msg)
                 ids = [self.spectra.activeID]
@@ -694,7 +693,7 @@ class TvSpecInterface:
         """
         if args.specid is None:
             if self.spectra.activeID is not None:
-                msg = "Using active spectrum %s for rebinning" % self.spectra.activeID
+                msg = f"Using active spectrum {self.spectra.activeID} for rebinning"
                 hdtv.ui.msg(msg)
                 ids = [self.spectra.activeID]
             else:
@@ -728,7 +727,7 @@ class TvSpecInterface:
         """
         if args.specid is None:
             if self.spectra.activeID is not None:
-                msg = "Using active spectrum %s for rebinning" % self.spectra.activeID
+                msg = f"Using active spectrum {self.spectra.activeID} for rebinning"
                 hdtv.ui.msg(msg)
                 ids = [self.spectra.activeID]
             else:
@@ -784,7 +783,7 @@ class TvSpecInterface:
         """
         if args.specid is None:
             if self.spectra.activeID is not None:
-                msg = "Using active spectrum %s for resampling" % self.spectra.activeID
+                msg = f"Using active spectrum {self.spectra.activeID} for resampling"
                 hdtv.ui.msg(msg)
                 ids = [self.spectra.activeID]
             else:
@@ -859,9 +858,9 @@ class TvSpecInterface:
             try:
                 spec = self.spectra.dict[ID]
             except KeyError:
-                s += "Spectrum %s: ID not found\n" % ID
+                s += f"Spectrum {ID}: ID not found\n"
                 continue
-            s += "Spectrum %s:\n" % ID
+            s += f"Spectrum {ID}:\n"
             s += hdtv.util.Indent(spec.info, "  ")
         hdtv.ui.msg(s, end="")
 
@@ -900,7 +899,7 @@ class TvSpecInterface:
             self.spectra.dict[ID].WriteSpectrum(filename, fmt)
             hdtv.ui.msg(f"Wrote spectrum with id {ID} to file {filename}")
         except KeyError:
-            hdtv.ui.warning("There is no spectrum with id: %s" % ID)
+            hdtv.ui.warning(f"There is no spectrum with id: {ID}")
 
     def SpectrumName(self, args):
         """
@@ -941,7 +940,7 @@ class TvSpecInterface:
                 self.spectra.dict[ID].norm = args.norm
             except KeyError:
                 raise hdtv.cmdline.HDTVCommandError(
-                    "There is no spectrum with id: %s" % ID
+                    f"There is no spectrum with id: {ID}"
                 )
 
     def RandomModelCompleter(self, text, args=None):

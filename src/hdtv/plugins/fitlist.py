@@ -97,7 +97,7 @@ class FitlistManager:
                     # create valid path from relative pathnames
                     xmlfile = os.path.join(dirname, xmlfile)
                     if not os.path.exists(xmlfile):
-                        hdtv.ui.warning("No such file %s" % xmlfile)
+                        hdtv.ui.warning(f"No such file {xmlfile}")
                         continue
                     sid = None
                     for ID in self.spectra.ids:
@@ -107,7 +107,7 @@ class FitlistManager:
                     if sid is not None:
                         self.ReadXML(sid, xmlfile)
                     else:
-                        hdtv.ui.warning("Spectrum %s is not loaded. " % name)
+                        hdtv.ui.warning(f"Spectrum {name} is not loaded. ")
                 except ValueError:
                     hdtv.ui.warning(
                         "Could not parse line %d of file %s: ignored."
@@ -267,7 +267,7 @@ class FitlistHDTVInterface:
                     (base, _) = os.path.splitext(name)
                     fname = base + "." + hdtv.options.Get("fit.list.default_extension")
                     if not os.path.isfile(fname):
-                        hdtv.ui.warning("No such file %s" % fname)
+                        hdtv.ui.warning(f"No such file {fname}")
                     else:
                         fnames[sid] = (fname,)
             else:
@@ -283,7 +283,7 @@ class FitlistHDTVInterface:
                     fname = os.path.expanduser(fname)
                     more = glob.glob(fname)
                     if len(more) == 0:
-                        hdtv.ui.warning("No such file %s" % fname)
+                        hdtv.ui.warning(f"No such file {fname}")
                     fnames[sid].extend(more)
 
         # Load files
@@ -308,7 +308,7 @@ class FitlistHDTVInterface:
             raise hdtv.cmdline.HDTVCommandError("More than 1 files match the pattern")
         fname = fname[0]
         if not os.path.exists(fname):
-            raise hdtv.cmdline.HDTVCommandError("No such file %s" % fname)
+            raise hdtv.cmdline.HDTVCommandError(f"No such file {fname}")
         self.FitlistIf.ReadList(fname)
 
 

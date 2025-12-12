@@ -578,7 +578,7 @@ class CommandLine:
             file = hdtv.util.TxtFile(fname)
             file.read()
         except OSError as msg:
-            hdtv.ui.error("%s" % msg)
+            hdtv.ui.error(f"{msg}")
         for line in file.lines:
             hdtv.ui.msg("file> " + line)
             self.DoLine(line)
@@ -625,7 +625,7 @@ class CommandLine:
         except KeyboardInterrupt:
             hdtv.ui.warning("Aborted")
         except HDTVCommandError as msg:
-            hdtv.ui.error("%s" % str(msg))
+            hdtv.ui.error(f"{msg!s}")
         except SystemExit:
             self.Exit()
         except Exception:

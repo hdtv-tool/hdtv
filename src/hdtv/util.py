@@ -134,7 +134,7 @@ class TxtFile:
                 line += os.linesep
                 self.fd.write(line)
         except OSError as msg:
-            raise OSError("Error opening file: %s" % msg)
+            raise OSError(f"Error opening file: {msg}")
         except BaseException:
             raise
         finally:
@@ -484,9 +484,9 @@ class Position:
     def __str__(self):
         text = ""
         if self.fixedInCal:
-            text += "Cal: %s" % self._pos_cal
+            text += f"Cal: {self._pos_cal}"
         else:
-            text += "Uncal: %s" % self._pos_uncal
+            text += f"Uncal: {self._pos_uncal}"
         return text
 
     def _Ch2E(self, Ch):
@@ -653,13 +653,13 @@ class ID:
                 except ValueError:
                     start = cls._parseNormalID(start)
                 except AttributeError:
-                    hdtv.ui.error("Invalid key word %s" % start)
+                    hdtv.ui.error(f"Invalid key word {start}")
                     raise ValueError
                 else:
                     if len(special) == 0:
                         start = special[0]
                     elif len(special) > 0:
-                        hdtv.ui.error("Invalid ID %s" % start)
+                        hdtv.ui.error(f"Invalid ID {start}")
                         raise ValueError
                 # stop
                 try:
@@ -667,13 +667,13 @@ class ID:
                 except ValueError:
                     stop = cls._parseNormalID(stop)
                 except AttributeError:
-                    hdtv.ui.error("Invalid key word %s" % stop)
+                    hdtv.ui.error(f"Invalid key word {stop}")
                     raise ValueError
                 else:
                     if len(special) == 0:
                         stop = special[0]
                     elif len(special) > 0:
-                        hdtv.ui.error("Invalid ID %s" % stop)
+                        hdtv.ui.error(f"Invalid ID {stop}")
                         raise ValueError
                 # fill the range
                 ids.extend([i for i in manager.ids if (i >= start and i <= stop)])
@@ -684,7 +684,7 @@ class ID:
                 except ValueError:
                     ids.append(cls._parseNormalID(s))
                 except AttributeError:
-                    hdtv.ui.error("Invalid key word %s" % s)
+                    hdtv.ui.error(f"Invalid key word {s}")
                     raise ValueError
 
         # ID might be None, if e.g. activeID is None
@@ -704,7 +704,7 @@ class ID:
                 if (
                     ID not in valid_ids
                 ):  # This only works because we appended IDs above, not mIDs, because they are different instances of the ID object
-                    hdtv.ui.warning("Non-existent id %s" % ID)
+                    hdtv.ui.warning(f"Non-existent id {ID}")
 
         else:
             valid_ids = ids

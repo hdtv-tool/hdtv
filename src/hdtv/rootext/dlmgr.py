@@ -46,5 +46,5 @@ def LoadLibrary(name):
     """
     libname = libfmt % name
     if ROOT.gSystem.Load(libname) < 0:
-        hdtv.ui.error("Failed to load library %s" % libname)
+        hdtv.ui.error(f"Failed to load library {libname}")
         sys.exit(1)

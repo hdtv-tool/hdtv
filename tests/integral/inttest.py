@@ -19,7 +19,7 @@ def test(bgdeg):
 
     for i in range(bg.GetDegree() + 1):
         par = ErrValue(bg.GetFunc().GetParameter(i), bg.GetFunc().GetParError(i))
-        print("bg[%d]: %10s" % (i, par.fmt()))
+        print(f"bg[{int(i)}]: {par.fmt():>10}")
 
     int_bac = ROOT.HDTV.Fit.BgIntegral(bg, 6, 12, h.GetXaxis())
     int_sub = ROOT.HDTV.Fit.TH1BgsubIntegral(h, bg, 6, 12)
@@ -33,8 +33,7 @@ def test(bgdeg):
         skew = ErrValue(integral.GetRawSkewness(), integral.GetRawSkewnessError())
 
         print(
-            "%s %15s %15s %15s %15s"
-            % (kind, pos.fmt(), width.fmt(), vol.fmt(), skew.fmt())
+            f"{kind} {pos.fmt():>15} {width.fmt():>15} {vol.fmt():>15} {skew.fmt():>15}"
         )
 
 

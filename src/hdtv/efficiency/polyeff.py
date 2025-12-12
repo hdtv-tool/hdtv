@@ -44,7 +44,7 @@ class PolyEff(_Efficiency):
         TFString = "[0] * ([1]"
 
         for i in range(2, degree + 2):
-            TFString += " + [%d]*x^%d" % (i, i - 1)
+            TFString += f" + [{int(i)}]*x^{int(i - 1)}"
 
         TFString += ")"
 

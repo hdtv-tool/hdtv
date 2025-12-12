@@ -119,7 +119,7 @@ class Histogram(Drawable):
         if not self._hist:
             return s
         s += f"Name: {self!s}\n"
-        s += "Nbins: %d\n" % self._hist.GetNbinsX()
+        s += f"Nbins: {int(self._hist.GetNbinsX())}\n"
         xmin = self._hist.GetXaxis().GetXmin()
         xmax = self._hist.GetXaxis().GetXmax()
         if self.cal and not self.cal.IsTrivial():
@@ -132,7 +132,7 @@ class Histogram(Drawable):
         if not self.cal or self.cal.IsTrivial():
             s += "Calibration: none\n"
         elif isinstance(self.cal, ROOT.HDTV.Calibration):
-            s += "Calibration: Polynomial, degree %d\n" % self.cal.GetDegree()
+            s += f"Calibration: Polynomial, degree {int(self.cal.GetDegree())}\n"
             s += f"Calibration coefficients: {hdtv.cal.PrintCal(self.cal)}\n"
         else:
             s += "Calibration: unknown\n"
@@ -491,7 +491,7 @@ class CutHistogram(Histogram):
         s += f"on {self.axis} axis gate: "
         for i in range(len(self.gates)):
             g = self.gates[i]
-            s += "%d - %d " % (g.p1.pos_cal, g.p2.pos_cal)
+            s += f"{int(g.p1.pos_cal)} - {int(g.p2.pos_cal)} "
             if i != len(self.gates):
                 "and"
         return s

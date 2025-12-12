@@ -629,7 +629,7 @@ class TvSpecInterface:
 
         if args.normalize:
             norm_fac = len(ids)
-            hdtv.ui.msg("Normalizing spectrum %s by 1/%d" % (addTo, norm_fac))
+            hdtv.ui.msg(f"Normalizing spectrum {addTo} by 1/{int(norm_fac)}")
             self.spectra.dict[addTo].Multiply(1.0 / norm_fac)
 
     def SpectrumSub(self, args):

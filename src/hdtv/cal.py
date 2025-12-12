@@ -140,7 +140,7 @@ class CalibrationFitter:
             self.__TF1.FixParameter(1, 1.0)
             degree = 1
         else:
-            self.__TF1 = ROOT.TF1(self.__TF1_id, "pol%d" % degree, 0, 0)
+            self.__TF1 = ROOT.TF1(self.__TF1_id, f"pol{int(degree)}", 0, 0)
 
         # Prepare data for fitter
         channels = array("d")
@@ -305,7 +305,7 @@ class CalibrationFitter:
             i += 1
 
         coeffs = self.calib.GetCoeffs()
-        func = ROOT.TF1("CalFitFunc", "pol%d" % (len(coeffs) - 1), min_ch, max_ch)
+        func = ROOT.TF1("CalFitFunc", f"pol{int(len(coeffs) - 1)}", min_ch, max_ch)
         ROOT.SetOwnership(func, False)
         for i, coeff in enumerate(coeffs):
             func.SetParameter(i, coeff)

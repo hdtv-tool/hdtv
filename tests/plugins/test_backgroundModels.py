@@ -196,7 +196,7 @@ def test_backgroundRegions(
     command.append("fit execute")
     command.append("fit store")
     for i in range(nregions):
-        command.append("fit marker background delete %i" % (i))
+        command.append(f"fit marker background delete {int(i)}")
     command.append("fit marker region delete 0")
     command.append("fit marker peak delete 0")
     f, ferr = hdtvcmd(*command)

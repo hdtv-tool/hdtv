@@ -396,7 +396,7 @@ class FitXml:
                 if count == 1:
                     msg += "1 fit restored."
                 else:
-                    msg += "%d fits restored." % count
+                    msg += f"{int(count)} fits restored."
                 hdtv.ui.msg(msg)
                 return count, fits
 

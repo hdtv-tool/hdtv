@@ -90,7 +90,7 @@ class EffCalIf:
                     f"No such efficiency function {name}"
                 )
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
 
     def SetPar(self, spectrumID, parameter):
         """
@@ -99,10 +99,10 @@ class EffCalIf:
         try:
             self.spectra.dict[spectrumID].effCal.parameter = parameter
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def Assign(self, todo):
@@ -117,10 +117,10 @@ class EffCalIf:
         try:
             self.spectra.dict[spectrumID].effCal.loadPar(filename)
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def ReadCov(self, spectrumID, filename):
@@ -130,10 +130,10 @@ class EffCalIf:
         try:
             self.spectra.dict[spectrumID].effCal.loadCov(filename)
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def WritePar(self, spectrumID, filename):
@@ -143,10 +143,10 @@ class EffCalIf:
         try:
             self.spectra.dict[spectrumID].effCal.savePar(filename)
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def WriteCov(self, spectrumID, filename):
@@ -156,10 +156,10 @@ class EffCalIf:
         try:
             self.spectra.dict[spectrumID].effCal.saveCov(filename)
         except IndexError:
-            raise hdtv.cmdline.HDTVCommandError("Invalid spectrum ID %d" % spectrumID)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid spectrum ID {int(spectrumID)}")
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def List(self, ids=None):
@@ -198,7 +198,7 @@ class EffCalIf:
             self.spectra.dict[spectrumID].effCal.TF1.Draw()
         except AttributeError:
             raise hdtv.cmdline.HDTVCommandError(
-                "No efficiency for spectrum ID %d set" % spectrumID
+                f"No efficiency for spectrum ID {int(spectrumID)} set"
             )
 
     def Fit(
@@ -924,7 +924,7 @@ class EnergyCalIf:
                 calDict[name] = hdtv.cal.MakeCalibration(coeff)
             except ValueError:
                 hdtv.ui.warning(
-                    "Could not parse line %d of file %s: ignored." % (n, fname)
+                    f"Could not parse line {int(n)} of file {fname}: ignored."
                 )
         return calDict
 

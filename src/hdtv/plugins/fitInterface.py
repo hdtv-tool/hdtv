@@ -413,12 +413,12 @@ class FitInterface:
                 if spec is None:
                     continue
                 fitter = spec.dict[ID].fitter
-                statstr += "fitter status of fit id %d: \n" % ID
+                statstr += f"fitter status of fit id {int(ID)}: \n"
             if fitter.backgroundModel.name == "polynomial":
                 statstr += "<b>Background model:</b> %s" % escape(
                     fitter.backgroundModel.name
                 )
-                statstr += ", deg=%i" % fitter.backgroundModel.fParStatus["nparams"]
+                statstr += f", deg={int(fitter.backgroundModel.fParStatus['nparams'])}"
                 statstr += "\n"
             else:
                 statstr += "<b>Background model:</b> %s\n" % escape(
@@ -1430,7 +1430,7 @@ class TvFitInterface:
         for specID in specIDs:
             fitIDs = hdtv.util.ID.ParseIds(args.fitids, self.spectra.dict[specID])
             if not fitIDs:
-                hdtv.ui.warning("No fit for spectrum %d to work on" % specID)
+                hdtv.ui.warning(f"No fit for spectrum {int(specID)} to work on")
                 continue
             for fitID in fitIDs:
                 self.fitIf.FitReset(

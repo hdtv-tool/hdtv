@@ -204,13 +204,13 @@ class MatInterface:
             gates = ""
             for gate in obj.regionMarkers:
                 p = sorted([gate.p1.pos_cal, gate.p2.pos_cal])
-                gates += " %d - %d " % (p[0], p[1])
+                gates += f" {int(p[0])} - {int(p[1])} "
             this["gates"] = gates
 
             bgs = ""
             for bg in obj.bgMarkers:
                 bg = sorted([bg.p1.pos_cal, bg.p2.pos_cal])
-                bgs += " %d - %d " % (bg[0], bg[1])
+                bgs += f" {int(bg[0])} - {int(bg[1])} "
             this["bg"] = bgs
 
             if obj.spec is not None:

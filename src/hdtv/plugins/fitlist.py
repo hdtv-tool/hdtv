@@ -243,7 +243,7 @@ class FitlistHDTVInterface:
                     # TODO: do something sensible here... Luckily hdtv will not
                     # overwrite spectra without asking...
                     pass
-            hdtv.ui.msg("Saving fits of spectrum %d to %s" % (sid, fname))
+            hdtv.ui.msg(f"Saving fits of spectrum {int(sid)} to {fname}")
 
             if hdtv.util.user_save_file(fname, args.force):
                 self.FitlistIf.WriteXML(sid, fname)

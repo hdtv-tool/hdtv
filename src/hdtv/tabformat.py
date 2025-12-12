@@ -126,7 +126,7 @@ def tabformat(cells, **kwargs):
             rows[i].append("")
 
     # Produce the appropriate format string for output
-    fmtstr = (" " * col_sep_width).join(["%%-%ds" % w for w in col_widths])
+    fmtstr = (" " * col_sep_width).join([f"%-{int(w)}s" for w in col_widths])
 
     # Output the table, row by row
     for i in range(n_rows):

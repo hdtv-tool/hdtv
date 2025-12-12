@@ -330,7 +330,7 @@ class DrawableManager:
                 try:
                     self.dict[ID].Refresh()
                 except KeyError:
-                    hdtv.ui.warning("ID %d not found" % ID)
+                    hdtv.ui.warning(f"ID {int(ID)} not found")
             return ids
 
     # Hide commands
@@ -366,7 +366,7 @@ class DrawableManager:
                     self.dict[ID].Hide()
                     self.visible.discard(ID)
                 except KeyError:
-                    hdtv.ui.warning("ID %d not found" % ID)
+                    hdtv.ui.warning(f"ID {int(ID)} not found")
             return ids
 
     # Show commands:

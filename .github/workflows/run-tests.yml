@@ -28,6 +28,10 @@ jobs:
       shell: bash -l {0}
       run: mamba install root=${{ matrix.root-version }} numpy scipy prompt_toolkit matplotlib uncertainties xorg-libx11 docutils pytest pytest-cov
 
+    - name: Install hdtv
+      shell: bash -l {0}
+      run: pip install -e .
+
     - name: Test with pytest
       shell: bash -l {0}
       run: pytest -v --color=yes --cov=hdtv --cov-report=xml tests

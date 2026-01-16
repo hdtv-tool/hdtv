@@ -223,11 +223,13 @@ class FitMap:
                     peak.extras.pop("pos_lit", None)
                 # pick best match within a certain tolerance (if it exists)
                 tol = args.tolerance
-                enlit = [e for e in energies if abs(peak.pos_cal.std_score(e)) < tol]
+                from uncertainties import UFloat
+                def score_nominal(e):
+                    score = peak.pos_cal.std_score(e)
+                    return abs(score.nominal_value) if isinstance(score, UFloat) else abs(score)
+                enlit = [e for e in energies if score_nominal(e) < tol]
                 if len(enlit) > 0:
-                    peak.extras["pos_lit"] = min(
-                        enlit, key=lambda e: abs(peak.pos_cal.std_score(e))
-                    )
+                    peak.extras["pos_lit"] = min(enlit, key=score_nominal)
                     count += 1
         # give a feetback to the user
         hdtv.ui.msg("Mapped %s energies to peaks" % count)

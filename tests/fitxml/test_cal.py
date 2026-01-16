@@ -108,7 +108,6 @@ def test_mark(region1, region2, peak):
     spectra.SetMarker("peak", peak)
     markers_before = get_markers()
     assert markers_before == [region1, region1, region2, region2, peak, peak]
-    return markers_before
 
 
 @pytest.mark.parametrize("region1, region2, peak", [(1450.0, 1470.0, 1460.0)])
@@ -117,7 +116,10 @@ def test_mark_and_calibrate(region1, region2, peak):
     Set Marker and calibrate afterwards
     Marker will be kept fixed, but the spectrum changes
     """
-    markers_before = test_mark(region1, region2, peak)
+    spectra.SetMarker("region", region1)
+    spectra.SetMarker("region", region2)
+    spectra.SetMarker("peak", peak)
+    markers_before = get_markers()
     spectra.ApplyCalibration("0", [0, 2])
     markers_after = get_markers()
     assert all(x == y for (x, y) in zip(markers_before, markers_after))

@@ -770,8 +770,11 @@ class Fit(Drawable):
         if not markers:  # No markers
             return None
         else:
-            x_start = min(markers)
-            x_end = max(markers)
+            from uncertainties import UFloat
+            def nominal(x):
+                return x.nominal_value if isinstance(x, UFloat) else x
+            x_start = min(markers, key=nominal)
+            x_end = max(markers, key=nominal)
             return (x_start, x_end)
 
     def SetDecomp(self, stat=True):

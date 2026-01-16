@@ -427,14 +427,22 @@ class GammaLib(list):
                     x for x in results if getattr(x, key).lower() == value.lower()
                 ]
             else:  # Do fuzzy compare
+                from uncertainties import UFloat
+                def get_diff(x):
+                    diff = getattr(x, key) - value
+                    return diff.nominal_value if isinstance(diff, UFloat) else diff
                 results = [
-                    x for x in results if abs(getattr(x, key) - value) <= fuzziness
+                    x for x in results if abs(get_diff(x)) <= fuzziness
                 ]
 
         # Sort
         try:
             if sort_key is not None:
-                results.sort(key=lambda x: getattr(x, sort_key), reverse=sort_reverse)
+                from uncertainties import UFloat
+                def sort_val(x):
+                    val = getattr(x, sort_key)
+                    return val.nominal_value if isinstance(val, UFloat) else val
+                results.sort(key=sort_val, reverse=sort_reverse)
         except AttributeError:
             hdtv.ui.warning("Could not sort by '" + str(sort_key) + "': No such key")
             raise AttributeError

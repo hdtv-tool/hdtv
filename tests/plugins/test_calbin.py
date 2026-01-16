@@ -98,7 +98,7 @@ def test_calbin(temp_file, test_spectrum):
         )
     )
     command.append(
-        "fit marker peak set %f" % ((step + 0.5) * test_spectrum.nbins_per_step)
+        f"fit marker peak set {(step + 0.5) * test_spectrum.nbins_per_step:f}"
     )
 
     command.append("fit execute")

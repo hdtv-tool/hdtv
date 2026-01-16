@@ -115,24 +115,24 @@ class Histogram(Drawable):
         """
         Return a string describing this spectrum
         """
-        s = "Spectrum type: %s\n" % self.typeStr
+        s = f"Spectrum type: {self.typeStr}\n"
         if not self._hist:
             return s
-        s += "Name: %s\n" % str(self)
-        s += "Nbins: %d\n" % self._hist.GetNbinsX()
+        s += f"Name: {self!s}\n"
+        s += f"Nbins: {int(self._hist.GetNbinsX())}\n"
         xmin = self._hist.GetXaxis().GetXmin()
         xmax = self._hist.GetXaxis().GetXmax()
         if self.cal and not self.cal.IsTrivial():
             s += f"Xmin: {self.cal.Ch2E(xmin):.2f} (cal)  {xmin:.2f} (uncal)\n"
             s += f"Xmax: {self.cal.Ch2E(xmax):.2f} (cal)  {xmax:.2f} (uncal)\n"
         else:
-            s += "Xmin: %.2f\n" % xmin
-            s += "Xmax: %.2f\n" % xmax
+            s += f"Xmin: {xmin:.2f}\n"
+            s += f"Xmax: {xmax:.2f}\n"
 
         if not self.cal or self.cal.IsTrivial():
             s += "Calibration: none\n"
         elif isinstance(self.cal, ROOT.HDTV.Calibration):
-            s += "Calibration: Polynomial, degree %d\n" % self.cal.GetDegree()
+            s += f"Calibration: Polynomial, degree {int(self.cal.GetDegree())}\n"
             s += f"Calibration coefficients: {hdtv.cal.PrintCal(self.cal)}\n"
         else:
             s += "Calibration: unknown\n"
@@ -434,7 +434,7 @@ class FileHistogram(Histogram):
         try:
             os.path.exists(fname)
         except OSError:
-            hdtv.ui.error("File %s not found" % fname)
+            hdtv.ui.error(f"File {fname} not found")
             raise
         # call to SpecReader to get the hist
         try:
@@ -451,9 +451,9 @@ class FileHistogram(Histogram):
     def info(self):
         # get the info property of the baseclass
         s = super().info
-        s += "Filename: %s\n" % self.filename
+        s += f"Filename: {self.filename}\n"
         if self.fmt:
-            s += "File format: %s\n" % self.fmt
+            s += f"File format: {self.fmt}\n"
         else:
             s += "File format: autodetected\n"
         return s
@@ -465,7 +465,7 @@ class FileHistogram(Histogram):
         try:
             os.path.exists(self.filename)
         except OSError:
-            hdtv.ui.warning("File %s not found, keeping previous data" % self.filename)
+            hdtv.ui.warning(f"File {self.filename} not found, keeping previous data")
             return
         # call to SpecReader to get the hist
         try:
@@ -488,10 +488,10 @@ class CutHistogram(Histogram):
     def info(self):
         s = super().info
         s += "cut "
-        s += "on %s axis gate: " % self.axis
+        s += f"on {self.axis} axis gate: "
         for i in range(len(self.gates)):
             g = self.gates[i]
-            s += "%d - %d " % (g.p1.pos_cal, g.p2.pos_cal)
+            s += f"{int(g.p1.pos_cal)} - {int(g.p2.pos_cal)} "
             if i != len(self.gates):
                 "and"
         return s
@@ -785,13 +785,13 @@ class MHisto2D(Histo2D):
         prx_fname = basename + ".prx"
         pry_fname = ""
         if os.path.exists(prx_fname):
-            hdtv.ui.info("Using %s for x projection" % prx_fname)
+            hdtv.ui.info(f"Using {prx_fname} for x projection")
             prx_fname = ""
 
         if not sym:
             pry_fname = basename + ".pry"
             if os.path.exists(pry_fname):
-                hdtv.ui.info("Using %s for y projection" % pry_fname)
+                hdtv.ui.info(f"Using {pry_fname} for y projection")
                 pry_fname = ""
 
         if prx_fname or pry_fname:
@@ -800,17 +800,17 @@ class MHisto2D(Histo2D):
                 raise RuntimeError("Project: " + ROOT.MatOp.GetErrorString(errno))
 
             if prx_fname:
-                hdtv.ui.info("Generated x projection: %s" % prx_fname)
+                hdtv.ui.info(f"Generated x projection: {prx_fname}")
             if pry_fname:
-                hdtv.ui.info("Generated y projection: %s" % pry_fname)
+                hdtv.ui.info(f"Generated y projection: {pry_fname}")
 
         # Generate transpose
         if not sym:
             trans_fname = basename + ".tmtx"
             if os.path.exists(trans_fname):
-                hdtv.ui.info("Using %s for transpose" % trans_fname)
+                hdtv.ui.info(f"Using {trans_fname} for transpose")
             else:
                 errno = ROOT.MatOp.Transpose(fname, trans_fname)
                 if errno != ROOT.MatOp.ERR_SUCCESS:
                     raise RuntimeError("Transpose: " + ROOT.MatOp.GetErrorString(errno))
-                hdtv.ui.info("Generated transpose: %s" % trans_fname)
+                hdtv.ui.info(f"Generated transpose: {trans_fname}")

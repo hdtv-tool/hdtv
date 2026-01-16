@@ -172,7 +172,7 @@ class PeakFinder:
             reason = None
             if peak.vol.nominal_value <= 0.0:
                 bad = True
-                reason = "vol = %s" % peak.vol
+                reason = f"vol = {peak.vol}"
             elif (
                 not fit.regionMarkers[0].p1.pos_cal
                 < peak.pos_cal.nominal_value
@@ -187,7 +187,7 @@ class PeakFinder:
                     or peak.width.nominal_value > 5 * self.sigma_E
                 ):
                     bad = True
-                    reason = "width = %s" % peak.width
+                    reason = f"width = {peak.width}"
             elif fit.fitter.peakModel.name == "ee":
                 # FIXME: what are frequent bad things that can happen here???
                 pass

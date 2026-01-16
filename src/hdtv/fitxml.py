@@ -59,7 +59,7 @@ class FitXml:
         try:
             fits = self.spectra.dict[sid].dict
         except KeyError:
-            raise HDTVCommandError("No spectrum with id %s loaded." % sid)
+            raise HDTVCommandError(f"No spectrum with id {sid} loaded.")
         root = self.CreateXml(fits)
         # save to file
         tree = ET.ElementTree(root)
@@ -192,7 +192,7 @@ class FitXml:
                     index = fit.peaks.index(peak)
                     status = status[index]
                 paramElement.set("status", str(status))
-                param = getattr(peak, "%s_cal" % param)
+                param = getattr(peak, f"{param}_cal")
                 if param is not None:
                     # <value>
                     if param.nominal_value is not None:
@@ -313,7 +313,7 @@ class FitXml:
             if sid is None:
                 sid = self.spectra.activeID
             if sid not in self.spectra.ids:
-                raise HDTVCommandError("No spectrum with id %s loaded." % sid)
+                raise HDTVCommandError(f"No spectrum with id {sid} loaded.")
             count = 0
             try:
                 fname = f"'{fname or file_object.name}'"
@@ -338,7 +338,7 @@ class FitXml:
                     # old versions
                     oldversion = root.get("version")
                     hdtv.ui.warning(
-                        "The XML version of this file (%s) is outdated." % oldversion
+                        f"The XML version of this file ({oldversion}) is outdated."
                     )
                     if oldversion == "1.4":
                         hdtv.ui.msg(
@@ -370,7 +370,7 @@ class FitXml:
                         )
                     if oldversion == "1.0":
                         hdtv.ui.msg(
-                            "Restoring only fits belonging to spectrum %s" % sid
+                            f"Restoring only fits belonging to spectrum {sid}"
                         )
                         hdtv.ui.msg(
                             "There may be fits belonging to other spectra in this file."
@@ -392,11 +392,11 @@ class FitXml:
             except SyntaxError as e:
                 raise HDTVCommandError(f"Error reading fits from {fname}.")
             else:
-                msg = "%s loaded: " % (fname)
+                msg = f"{fname} loaded: "
                 if count == 1:
                     msg += "1 fit restored."
                 else:
-                    msg += "%d fits restored." % count
+                    msg += f"{int(count)} fits restored."
                 hdtv.ui.msg(msg)
                 return count, fits
 
@@ -734,7 +734,7 @@ class FitXml:
             try:
                 peak = fit.fitter.peakModel.Peak(cal=calibration, **parameter)
             except TypeError:
-                hdtv.ui.error("Error reading peak with parameters: %s" % str(parameter))
+                hdtv.ui.error(f"Error reading peak with parameters: {parameter!s}")
                 success = False
                 continue
             peak.extras = extras

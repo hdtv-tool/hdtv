@@ -126,7 +126,7 @@ class weakref:
         return self._ref() <= other
 
     def __str__(self):
-        return "<weakref proxy; %s>" % str(self._ref())
+        return f"<weakref proxy; {self._ref()!s}>"
 
     def __deepcopy__(self, memo):
         return weakref(self._ref())

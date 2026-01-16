@@ -127,7 +127,7 @@ class FitInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args, spec)
         except ValueError:
-            self.window.viewport.SetStatusText("Invalid fit identifier: %s" % args)
+            self.window.viewport.SetStatusText(f"Invalid fit identifier: {args}")
             return
         spec.ShowObjects(ids)
 
@@ -142,10 +142,10 @@ class FitInterface:
         try:
             ids = hdtv.util.ID.ParseIds(args, spec)
         except ValueError:
-            self.window.viewport.SetStatusText("Invalid fit identifier: %s" % args)
+            self.window.viewport.SetStatusText(f"Invalid fit identifier: {args}")
             return
         if len(ids) == 1:
-            self.window.viewport.SetStatusText("Activating fit %s" % ids[0])
+            self.window.viewport.SetStatusText(f"Activating fit {ids[0]}")
             self.spectra.ActivateFit(ids[0])
         elif not ids:
             self.window.viewport.SetStatusText("Deactivating fit")
@@ -413,18 +413,18 @@ class FitInterface:
                 if spec is None:
                     continue
                 fitter = spec.dict[ID].fitter
-                statstr += "fitter status of fit id %d: \n" % ID
+                statstr += f"fitter status of fit id {int(ID)}: \n"
             if fitter.backgroundModel.name == "polynomial":
                 statstr += "<b>Background model:</b> %s" % escape(
                     fitter.backgroundModel.name
                 )
-                statstr += ", deg=%i" % fitter.backgroundModel.fParStatus["nparams"]
+                statstr += f", deg={int(fitter.backgroundModel.fParStatus['nparams'])}"
                 statstr += "\n"
             else:
                 statstr += "<b>Background model:</b> %s\n" % escape(
                     fitter.backgroundModel.name
                 )
-            statstr += "<b>Peak model:</b> %s\n" % fitter.peakModel.name
+            statstr += f"<b>Peak model:</b> {fitter.peakModel.name}\n"
             statstr += fitter.OptionsStr()
         hdtv.ui.msg(html=statstr)
 
@@ -448,7 +448,7 @@ class FitInterface:
             fit.Refresh()
         except ValueError as msg:
             raise hdtv.cmdline.HDTVCommandError(
-                "while editing active Fit: \n\t%s" % msg
+                f"while editing active Fit: \n\t{msg}"
             )
         # fit list
         if not ids:  # works for None and empty list
@@ -973,7 +973,7 @@ class TvFitInterface:
         mtype = self.MarkerCompleter(mtype)
         if len(mtype) == 0:
             raise hdtv.cmdline.HDTVCommandError(
-                "Markertype %s is not valid" % args.type
+                f"Markertype {args.type} is not valid"
             )
         # second argument is action
         action = self.MarkerCompleter(
@@ -983,7 +983,7 @@ class TvFitInterface:
             ],
         )
         if len(action) == 0:
-            raise hdtv.cmdline.HDTVCommandError("Invalid action: %s" % args.action)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid action: {args.action}")
         # replace "background" with "bg" which is internally used
         mtype = mtype[0].strip()
         if mtype == "background":
@@ -1122,7 +1122,7 @@ class TvFitInterface:
         spec = self.spectra.dict[sid]
         ids = hdtv.util.ID.ParseIds(args.fitids, spec)
         if len(ids) == 1:
-            hdtv.ui.msg("Activating fit %s" % ids[0])
+            hdtv.ui.msg(f"Activating fit {ids[0]}")
             self.spectra.ActivateFit(ids[0], sid)
         elif not ids:
             hdtv.ui.msg("Deactivating fit")
@@ -1151,7 +1151,7 @@ class TvFitInterface:
                         else:
                             msg = "It is not possible to remove single peaks, "
                             msg += (
-                                "removing whole fit with id %s instead." % fitid.major
+                                f"removing whole fit with id {fitid.major} instead."
                             )
                             hdtv.ui.warning(msg)
                             fitid.minor = None
@@ -1228,7 +1228,7 @@ class TvFitInterface:
                 fits.extend([spec.dict[ID] for ID in ids])
                 spec.ShowObjects(ids, clear=False)
                 if not fits:
-                    hdtv.ui.warning("Nothing to focus in spectrum %s" % sid)
+                    hdtv.ui.warning(f"Nothing to focus in spectrum {sid}")
                     return
         self.spectra.window.FocusObjects(fits)
 
@@ -1296,10 +1296,10 @@ class TvFitInterface:
         # check for unambiguity
         if len(models) > 1:
             raise hdtv.cmdline.HDTVCommandError(
-                "Peak model name '%s' is ambiguous" % name
+                f"Peak model name '{name}' is ambiguous"
             )
         if not models:
-            raise hdtv.cmdline.HDTVCommandError("Invalid peak model '%s'" % name)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid peak model '{name}'")
         else:
             name = models[0].strip()
             ids = []
@@ -1321,10 +1321,10 @@ class TvFitInterface:
         # check for unambiguity
         if len(models) > 1:
             raise hdtv.cmdline.HDTVCommandError(
-                "Background model name '%s' is ambiguous" % name
+                f"Background model name '{name}' is ambiguous"
             )
         if not models:
-            raise hdtv.cmdline.HDTVCommandError("Invalid background model '%s'" % name)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid background model '{name}'")
         else:
             name = models[0].strip()
             ids = []
@@ -1363,11 +1363,11 @@ class TvFitInterface:
         # check for unambiguity
         if len(parameter) > 1:
             raise hdtv.cmdline.HDTVCommandError(
-                "Parameter name %s is ambiguous" % param
+                f"Parameter name {param} is ambiguous"
             )
         if not parameter:
             raise hdtv.cmdline.HDTVCommandError(
-                "Parameter name %s is not valid" % param
+                f"Parameter name {param} is not valid"
             )
         param = parameter[0].strip()
         ids = []
@@ -1430,7 +1430,7 @@ class TvFitInterface:
         for specID in specIDs:
             fitIDs = hdtv.util.ID.ParseIds(args.fitids, self.spectra.dict[specID])
             if not fitIDs:
-                hdtv.ui.warning("No fit for spectrum %d to work on" % specID)
+                hdtv.ui.warning(f"No fit for spectrum {int(specID)} to work on")
                 continue
             for fitID in fitIDs:
                 self.fitIf.FitReset(

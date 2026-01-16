@@ -72,12 +72,12 @@ class TextSpecReader:
                         self.__dict__[c + "col"] = col
                     else:
                         raise SpecReaderError(
-                            "Invalid format string: %s appears more than once" % c
+                            f"Invalid format string: {c} appears more than once"
                         )
                 elif c == "i":
                     pass
                 else:
-                    raise SpecReaderError("Invalid character %s in format string" % c)
+                    raise SpecReaderError(f"Invalid character {c} in format string")
 
             if self.ycol is None:
                 raise SpecReaderError("You must specify a column for y")

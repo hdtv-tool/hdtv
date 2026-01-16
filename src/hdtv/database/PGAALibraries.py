@@ -140,7 +140,7 @@ class PGAAlib_IKI2000(GammaLib):
                 self.append(gamma)
         except csv.Error as e:
             raise hdtv.cmdline.HDTVCommandAbort(
-                "file %s, line %d: %s" % (self.csvfile, reader.line_num, e)
+                f"file {self.csvfile}, line {int(reader.line_num)}: {e}"
             )
         else:
             self.opened = True
@@ -205,7 +205,7 @@ class PromptGammas(GammaLib):
                 )
                 self.append(gamma)
         except csv.Error as e:
-            hdtv.ui.error("file %s, line %d: %s" % (self.csvfile, reader.line_num, e))
+            hdtv.ui.error(f"file {self.csvfile}, line {int(reader.line_num)}: {e}")
         else:
             self.opened = True
         finally:

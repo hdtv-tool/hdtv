@@ -140,7 +140,7 @@ class CalibrationFitter:
             self.__TF1.FixParameter(1, 1.0)
             degree = 1
         else:
-            self.__TF1 = ROOT.TF1(self.__TF1_id, "pol%d" % degree, 0, 0)
+            self.__TF1 = ROOT.TF1(self.__TF1_id, f"pol{int(degree)}", 0, 0)
 
         # Prepare data for fitter
         channels = array("d")
@@ -248,7 +248,7 @@ class CalibrationFitter:
 
         s = "<b>Calibration</b>: "
         s += " ".join([escape("%.6e") % x for x in self.calib.GetCoeffs()])
-        s += "\n<b>Chi²</b>: %.4f" % self.chi2
+        s += f"\n<b>Chi²</b>: {self.chi2:.4f}"
 
         return s
 
@@ -268,10 +268,10 @@ class CalibrationFitter:
             e_fit = self.calib.Ch2E(ch.nominal_value)
             residual = e_given - e_fit
 
-            tableline["channel"] = "%10.2f" % ch.nominal_value
-            tableline["e_given"] = "%10.2f" % e_given.nominal_value
-            tableline["e_fit"] = "%10.2f" % e_fit
-            tableline["residual"] = "%10.2f" % residual.nominal_value
+            tableline["channel"] = f"{ch.nominal_value:10.2f}"
+            tableline["e_given"] = f"{e_given.nominal_value:10.2f}"
+            tableline["e_fit"] = f"{e_fit:10.2f}"
+            tableline["residual"] = f"{residual.nominal_value:10.2f}"
             tabledata.append(tableline)
 
         return hdtv.util.Table(tabledata, keys, header=header, sortBy="channel")
@@ -305,7 +305,7 @@ class CalibrationFitter:
             i += 1
 
         coeffs = self.calib.GetCoeffs()
-        func = ROOT.TF1("CalFitFunc", "pol%d" % (len(coeffs) - 1), min_ch, max_ch)
+        func = ROOT.TF1("CalFitFunc", f"pol{int(len(coeffs) - 1)}", min_ch, max_ch)
         ROOT.SetOwnership(func, False)
         for i, coeff in enumerate(coeffs):
             func.SetParameter(i, coeff)

@@ -206,13 +206,13 @@ class Fit(Drawable):
         i = 0
         text = ""
         for peak in self.peaks:
-            text += ("\nPeak %d:" % i).ljust(10)
+            text += f"\nPeak {int(i)}:".ljust(10)
             peakstr = peak.formatted_str(verbose).strip()
             peakstr = peakstr.split("\n")
             peakstr = ("\n".ljust(10)).join(peakstr)
             text += peakstr
             i += 1
-        text += "\n\n chi² of fit: %d" % self.chi
+        text += f"\n\n chi² of fit: {int(self.chi)}"
         return text
 
     def ExtractParams(self):
@@ -228,7 +228,7 @@ class Fit(Drawable):
         # Get peaks
         for peak in self.peaks:
             thispeak = {}
-            thispeak["chi"] = "%d" % self.chi
+            thispeak["chi"] = f"{int(self.chi)}"
             if self.ID is None:
                 thispeak["id"] = hdtv.util.ID(None, self.peaks.index(peak))
             else:
@@ -346,7 +346,7 @@ class Fit(Drawable):
         mtype  : "bg", "region", "peak"
         """
         self.spec = None
-        markers = getattr(self, "%sMarkers" % mtype)
+        markers = getattr(self, f"{mtype}Markers")
         if action == "set":
             markers.SetMarker(pos)
         if action == "remove":

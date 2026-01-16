@@ -75,11 +75,11 @@ def fit_write_and_save(filename):
 
     out_original = list_fit()
 
-    print("Saving fits to file %s" % filename)
+    print(f"Saving fits to file {filename}")
     fitxml.WriteXML(spectra.Get("0").ID, filename)
     print("Deleting all fits")
     spectra.Get("0").Clear()
-    print("Reading fits from file %s" % filename)
+    print(f"Reading fits from file {filename}")
     fitxml.ReadXML(spectra.Get("0").ID, filename)
 
     assert out_original == list_fit()

@@ -99,7 +99,7 @@ class MatInterface:
             ids = hdtv.util.ID.ParseIds(args, spec.matrix)
         except ValueError:
             if self.window:
-                self.window.viewport.SetStatusText("Invalid cut identifier: %s" % args)
+                self.window.viewport.SetStatusText(f"Invalid cut identifier: {args}")
             return
         spec.ShowObjects(ids)
 
@@ -118,11 +118,11 @@ class MatInterface:
             ids = hdtv.util.ID.ParseIds(args, spec.matrix)
         except ValueError:
             if self.window:
-                self.window.viewport.SetStatusText("Invalid cut identifier: %s" % args)
+                self.window.viewport.SetStatusText(f"Invalid cut identifier: {args}")
             return
         if len(ids) == 1:
             if self.window:
-                self.window.viewport.SetStatusText("Activating cut %s" % ids[0])
+                self.window.viewport.SetStatusText(f"Activating cut {ids[0]}")
             self.spectra.ActivateCut(ids[0])
         elif len(ids) == 0:
             if self.window:
@@ -167,7 +167,7 @@ class MatInterface:
         try:
             histo = MHisto2D(fname, sym)
         except (OSError, SpecReaderError):
-            hdtv.ui.warning("Could not load %s" % fname)
+            hdtv.ui.warning(f"Could not load {fname}")
             return
 
         matrix = Matrix(histo, sym, self.spectra.viewport)
@@ -204,13 +204,13 @@ class MatInterface:
             gates = ""
             for gate in obj.regionMarkers:
                 p = sorted([gate.p1.pos_cal, gate.p2.pos_cal])
-                gates += " %d - %d " % (p[0], p[1])
+                gates += f" {int(p[0])} - {int(p[1])} "
             this["gates"] = gates
 
             bgs = ""
             for bg in obj.bgMarkers:
                 bg = sorted([bg.p1.pos_cal, bg.p2.pos_cal])
-                bgs += " %d - %d " % (bg[0], bg[1])
+                bgs += f" {int(bg[0])} - {int(bg[1])} "
             this["bg"] = bgs
 
             if obj.spec is not None:
@@ -417,7 +417,7 @@ class TvMatInterface:
         mtype = self.MarkerCompleter(args.type)
         if len(mtype) == 0:
             raise hdtv.cmdline.HDTVCommandError(
-                "Marker type %s is not valid" % args.type
+                f"Marker type {args.type} is not valid"
             )
         action = self.MarkerCompleter(
             args.action,
@@ -426,7 +426,7 @@ class TvMatInterface:
             ],
         )
         if len(action) == 0:
-            raise hdtv.cmdline.HDTVCommandError("Invalid action: %s" % args.action)
+            raise hdtv.cmdline.HDTVCommandError(f"Invalid action: {args.action}")
 
         mtype = mtype[0].strip()
         # replace "background" with "cutbg" which is internally used
@@ -477,7 +477,7 @@ class TvMatInterface:
             return
         ids = hdtv.util.ID.ParseIds(args.cutid, spec.matrix)
         if len(ids) == 1:
-            hdtv.ui.msg("Activating cut %s" % ids[0])
+            hdtv.ui.msg(f"Activating cut {ids[0]}")
             self.spectra.ActivateCut(ids[0])
         elif len(ids) == 0:
             hdtv.ui.msg("Deactivating cut")
@@ -502,7 +502,7 @@ class TvMatInterface:
             # delete also cut spectrum
             if cut.spec is not None:
                 sid = self.spectra.Index(cut.spec)
-                hdtv.ui.msg("Remove spec %s" % sid)
+                hdtv.ui.msg(f"Remove spec {sid}")
                 self.spectra.Pop(sid)
 
 

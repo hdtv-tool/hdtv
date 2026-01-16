@@ -11,27 +11,27 @@ class Cut:
 
     def Cut(self, matfile, r1, r2):
         tempdir = "/home/braun/Diplom/temp"
-        fname = "%032X.asc" % random.randint(0, 2**128)
+        fname = f"{random.randint(0, 2 ** 128):032X}.asc"
 
         tvcmds = "cut activate 0; "
         tvcmds += "cut attach matrix 1; "
         tvcmds += "cut attach dir 2; "
 
-        tvcmds += "cut dir open 2 %s; " % tempdir
-        tvcmds += "cut matrix open 1 %s; " % matfile
+        tvcmds += f"cut dir open 2 {tempdir}; "
+        tvcmds += f"cut matrix open 1 {matfile}; "
 
         # Sub-channel resolution is really useless here,
         # because TV cuts only with channel resolution anyway
 
-        tvcmds += "cut marker cut enter %.1f; " % r1
-        tvcmds += "cut marker cut enter %.1f; " % r2
+        tvcmds += f"cut marker cut enter {r1:.1f}; "
+        tvcmds += f"cut marker cut enter {r2:.1f}; "
 
         for bg in self.fBgRegions:
-            tvcmds += "cut marker bg-gate enter %.1f;" % bg
+            tvcmds += f"cut marker bg-gate enter {bg:.1f};"
 
         tvcmds += "cut create cut; "
 
-        tvcmds += "spec write %s'txt active; " % (tempdir + "/" + fname)
+        tvcmds += f"spec write {tempdir + '/' + fname}'txt active; "
 
         tvcmds += "exit; "
 

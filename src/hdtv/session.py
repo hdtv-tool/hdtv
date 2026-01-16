@@ -65,17 +65,17 @@ class Session(DrawableManager):
             try:
                 spec = self.dict[ID]
             except KeyError:
-                hdtv.ui.warning("There is no spectrum with id: %s" % ID)
+                hdtv.ui.warning(f"There is no spectrum with id: {ID}")
             else:
                 if cal is None:
-                    hdtv.ui.msg("Unsetting calibration of spectrum with id %s" % ID)
+                    hdtv.ui.msg(f"Unsetting calibration of spectrum with id {ID}")
                     try:
                         self.caldict.pop(spec.name)
                     except KeyError:
                         pass
                     spec.cal = None
                 else:
-                    hdtv.ui.msg("Calibrated spectrum with id %s" % ID)
+                    hdtv.ui.msg(f"Calibrated spectrum with id {ID}")
                     cal = hdtv.cal.MakeCalibration(cal)
                     if storeInCaldict:
                         self.caldict[spec.name] = cal
@@ -161,7 +161,7 @@ class Session(DrawableManager):
             hdtv.ui.msg(html=str(fit), end="")
             fit.Draw(self.viewport)
         except OverflowError as msg:
-            hdtv.ui.error("Fit failed: %s" % msg)
+            hdtv.ui.error(f"Fit failed: {msg}")
         if fit.regionMarkers.IsFull():
             region = [
                 fit.regionMarkers[0].p1.pos_uncal,
@@ -236,7 +236,7 @@ class Session(DrawableManager):
         ID = spec.Insert(self.workFit, ID)
         spec.dict[ID].active = False
         spec.ActivateObject(None)
-        hdtv.ui.msg("Storing workFit with ID %s" % ID)
+        hdtv.ui.msg(f"Storing workFit with ID {ID}")
         self.workFit = copy.copy(self.workFit)
         self.workFit.active = True
         self.workFit.Draw(self.viewport)
@@ -299,7 +299,7 @@ class Session(DrawableManager):
             # give it a new color
             spec.color = hdtv.color.ColorForID(ID.major)
             self.Insert(spec, ID=hdtv.util.ID(mat.ID.major, ID.major))
-        hdtv.ui.msg("Storing workCut with ID %s" % ID)
+        hdtv.ui.msg(f"Storing workCut with ID {ID}")
         self.workCut = copy.copy(self.workCut)
         self.workCut.active = True
         self.workCut.Draw(self.viewport)

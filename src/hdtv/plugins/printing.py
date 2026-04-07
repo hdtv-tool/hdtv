@@ -186,9 +186,9 @@ class PrintOut:
         """
         if cal and not cal.IsTrivial():
             calpolynom = hdtv.cal.GetCoeffs(cal)
-            # scipy needs highes order first
+            # numpy needs highes order first
             calpolynom.reverse()
-            en = scipy.polyval(calpolynom, en)
+            en = numpy.polyval(calpolynom, en)
         return en
 
 

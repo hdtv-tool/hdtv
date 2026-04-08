@@ -1,0 +1,76 @@
+hdtv.spectrum
+=============
+
+.. py:module:: hdtv.spectrum
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hdtv.spectrum.Spectrum
+   hdtv.spectrum.CutSpectrum
+
+
+Module Contents
+---------------
+
+.. py:class:: Spectrum(histogram)
+
+   Bases: :py:obj:`hdtv.drawable.DrawableManager`
+
+
+   .. py:method:: __setattr__(name, value)
+
+
+   .. py:method:: __getattr__(name)
+
+
+   .. py:property:: color
+
+
+   .. py:property:: cal
+
+
+   .. py:method:: Insert(fit, ID=None)
+
+
+   .. py:method:: Pop(ID)
+
+
+   .. py:method:: Draw(viewport)
+
+
+   .. py:method:: Show()
+
+
+   .. py:method:: Hide()
+
+
+   .. py:method:: Refresh()
+
+
+.. py:class:: CutSpectrum(hist, matrix, axis)
+
+   Bases: :py:obj:`Spectrum`
+
+
+   .. py:method:: Show()
+
+      Show all visible cut markers for the axis of this spectrum
+
+
+
+   .. py:method:: Hide()
+
+      Hide also the cut markers, but without changing the visibility state of the matrix
+
+
+
+   .. py:method:: Refresh()
+
+      Repeat the cut
+
+
+

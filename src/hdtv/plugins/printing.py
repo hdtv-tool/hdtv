@@ -19,7 +19,6 @@
 
 import matplotlib
 import numpy
-import scipy
 
 matplotlib.use("agg")  # Must be before import pylab!
 import pylab

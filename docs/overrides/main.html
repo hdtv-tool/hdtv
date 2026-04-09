@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+<!--
+  Rewriting urls pointing to the docs to to beeing relative in docs dir
+-->
+
+<!--
+  The links in the project README.md are relative to the project root.
+  There is currently no better way to rewrite them than with JavaScript
+  in the viewers browser. This works surprising well.
+  NOTE: When a element is not loaded correctly the rewrite rule for this
+  kind of element might be missing
+-->
+
+
+{% block extrahead %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var base_url = window.location.origin;
+      document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace(base_url + '/{{ config.docs_dir }}/', base_url + '/');
+      });
+      document.querySelectorAll('img').forEach(img => {
+        img.src = img.src.replace(base_url + '/{{ config.docs_dir }}/', base_url + '/');
+      });
+    });
+  </script>
+{% endblock %}

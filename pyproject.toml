@@ -65,6 +65,9 @@ dev = [
     "pytest", "pytest-cov",
     "docutils",
     "ruff",
+    "zensical",
+    "mkdocstrings-python",
+    "mkdocstrings-c",
 ]
 
 [tool.setuptools]

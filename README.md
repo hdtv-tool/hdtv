@@ -1,10 +1,21 @@
 # HDTV - Nuclear Spectrum Analysis
 
+---
+
+# Building the DOCS
+
+- `uv sync`
+- `uv run zensical serve`
+- open the browser at `http://localhost:8000`
+
+---
+
+
 [![PyPI version](https://badge.fury.io/py/hdtv.svg)](https://badge.fury.io/py/hdtv)
 [![codecov](https://codecov.io/gh/janmayer/hdtv/branch/master/graph/badge.svg)](https://codecov.io/gh/janmayer/hdtv)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d54b84b35f834cb9a73a89a5ea67a8bf)](https://app.codacy.com/manual/janmayer/hdtv/dashboard)
 
-![hdtv-spectrum-load-fit](doc/assets/hdtv-spectrum-load-fit.gif)
+![hdtv-spectrum-load-fit](docs/assets/hdtv-spectrum-load-fit.gif)
 
 HDTV is a nuclear spectrum and coincidence matrix analysis tool.
 It can load uncompressed (text), compressed, and ROOT spectra and 2D-matrices.
@@ -103,8 +114,8 @@ See also [https://hub.docker.com/r/rootproject/root](https://hub.docker.com/r/ro
 
 ## Documentation
 For more information, including an overview of the available key
-bindings, refer to the [documentation](doc/guide/hdtv.rst).
-A [tutorial](doc/guide/hdtv-tutorial.rst) giving an introduction
+bindings, refer to the [documentation](docs/hdtv.md).
+A [tutorial](docs/tutorial.md) giving an introduction
 to HDTV and its basic features is also available.
 
 ## Development

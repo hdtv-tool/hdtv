@@ -453,7 +453,7 @@ class CommandLine:
 
     def SetHistory(self, path):
         if not os.access(path, os.W_OK):
-            hdtv.ui.error(f"History file '{path}' is read-only, will be discarded")
+            hdtv.ui.msg(f"History file '{path}' does not exist or is read only, will be discarded")
         self.history = FileHistory(path)
 
     def RegisterInteractive(self, name, ref):

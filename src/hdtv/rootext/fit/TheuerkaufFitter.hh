@@ -52,7 +52,8 @@ class TheuerkaufPeak {
   friend class TheuerkaufFitter;
 
 public:
-  TheuerkaufPeak() = default;
+  TheuerkaufPeak();
+  ~TheuerkaufPeak();
   TheuerkaufPeak(const Param &pos, const Param &vol, const Param &sigma, const Param &tl = Param::Empty(),
                  const Param &tr = Param::Empty(), const Param &sh = Param::Empty(), const Param &sw = Param::Empty());
   TheuerkaufPeak(const TheuerkaufPeak &src);
@@ -141,13 +142,14 @@ private:
 class TheuerkaufFitter : public Fitter {
 public:
   TheuerkaufFitter(double r1, double r2, Option<bool> integrate, Option<std::string> likelihood,
-                   Option<bool> onlypositivepeaks, bool debugShowInipar = false)
-      : Fitter(r1, r2), fIntegrate(integrate), fLikelihood(likelihood), fOnlypositivepeaks(onlypositivepeaks),
-        fDebugShowInipar(debugShowInipar) {}
+                   Option<bool> onlypositivepeaks, bool debugShowInipar = false);
 
   // Copying the fitter is not supported
+  ~TheuerkaufFitter();
   TheuerkaufFitter(const TheuerkaufFitter &) = delete;
+  TheuerkaufFitter(TheuerkaufFitter &&) = default;
   TheuerkaufFitter &operator=(const TheuerkaufFitter &) = delete;
+  TheuerkaufFitter &operator=(TheuerkaufFitter &&) = default;
 
   void AddPeak(const TheuerkaufPeak &peak);
   void Fit(TH1 &hist, const Background &bg);

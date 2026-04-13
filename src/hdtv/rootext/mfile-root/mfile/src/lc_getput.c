@@ -86,8 +86,9 @@ static int32_t readline(MFILE *mat, int32_t *buffer, uint32_t line) {
       lci->cachedcomprline = line;
     }
   }
+
   if (lci->cachedcomprline == line) {
-    return lci->uncomprf(buffer, lci->comprlinebuf, mat->columns);
+    return lci->uncomprf(buffer, (char*)lci->comprlinebuf, (int32_t)mat->columns);
   }
 
   return -1;
@@ -102,9 +103,8 @@ static int32_t writeline(MFILE *mat, int32_t *buffer, uint32_t line) {
 
   uint32_t p = poslentable[line].pos;
   uint32_t l = poslentable[line].len;
-
   uint32_t fp = lci->freepos;
-  uint32_t nl = lci->comprf(lci->comprlinebuf, buffer, mat->columns);
+  uint32_t nl = lci->comprf((char*)lci->comprlinebuf, buffer, (int32_t)mat->columns);
 #ifdef VERIFY_COMPRESSION
   verifycompr(lci, buffer, mat->columns);
 #endif

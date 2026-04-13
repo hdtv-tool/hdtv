@@ -37,7 +37,14 @@
 namespace HDTV {
 namespace Fit {
 
+
 // *** TheuerkaufPeak ***
+
+//! Constructor
+TheuerkaufPeak::TheuerkaufPeak() = default;
+
+//! Destructor
+TheuerkaufPeak::~TheuerkaufPeak() = default;
 
 //! Constructor
 //! Note that no tails correspond to tail parameters tl = tr = \infty. However,
@@ -197,6 +204,15 @@ double TheuerkaufPeak::GetNorm(double sigma, double tl, double tr) const {
 }
 
 // *** TheuerkaufFitter ***
+
+
+TheuerkaufFitter::TheuerkaufFitter(double r1, double r2, Option<bool> integrate, Option<std::string> likelihood,
+               Option<bool> onlypositivepeaks, bool debugShowInipar)
+  : Fitter(r1, r2), fIntegrate(integrate), fLikelihood(likelihood), fOnlypositivepeaks(onlypositivepeaks),
+    fDebugShowInipar(debugShowInipar) {}
+
+TheuerkaufFitter::~TheuerkaufFitter() = default;
+
 void TheuerkaufFitter::AddPeak(const TheuerkaufPeak &peak) {
   //! Adds a peak to the peak list
 

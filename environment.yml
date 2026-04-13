@@ -1,0 +1,13 @@
+name: hdtv
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - hsluv
+  - ipython
+  - matplotlib
+  - numpy
+  - prompt_toolkit >= 3.0.14
+  - scipy
+  - traitlets
+  - uncertainties

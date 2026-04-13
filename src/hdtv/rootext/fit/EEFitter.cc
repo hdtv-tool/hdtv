@@ -40,6 +40,10 @@ namespace Fit {
 
 const double EEPeak::DECOMP_FUNC_WIDTH = 4.0;
 
+EEPeak::EEPeak() = default;
+EEPeak::~EEPeak() = default;
+
+
 EEPeak::EEPeak(const Param &pos, const Param &amp, const Param &sigma1, const Param &sigma2, const Param &eta,
                const Param &gamma)
     : fPos{pos}, fAmp{amp}, fSigma1{sigma1}, fSigma2{sigma2}, fEta{eta}, fGamma{gamma},
@@ -241,6 +245,11 @@ void EEPeak::StoreIntegral() {
 }
 
 /*** EEFitter ***/
+EEFitter::EEFitter(double r1, double r2, Option<bool> integrate, Option<std::string> likelihood, bool debugShowInipar)
+      : Fitter(r1, r2), fIntegrate(integrate), fLikelihood(likelihood), fDebugShowInipar(debugShowInipar) {}
+
+EEFitter::~EEFitter() = default;
+
 void EEFitter::AddPeak(const EEPeak &peak) {
   fPeaks.push_back(peak);
   fNumPeaks++;

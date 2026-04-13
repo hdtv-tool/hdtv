@@ -5,6 +5,7 @@ from uncertainties import ufloat_fromstr
 
 import hdtv.cmdline
 import hdtv.ui
+import warnings
 
 
 class _Element:
@@ -186,7 +187,10 @@ class _Nuclides:
                 else:
                     abd = None
                 if line[3].strip():
-                    M = ufloat_fromstr(line[3].strip())
+                    # NOTE: Some entries are zero here. Disable warnings here.
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore")
+                        M = ufloat_fromstr(line[3].strip())
                 else:
                     M = None
                 if line[4].strip():

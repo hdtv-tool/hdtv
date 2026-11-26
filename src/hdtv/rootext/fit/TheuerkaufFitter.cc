@@ -47,8 +47,8 @@ namespace Fit {
 TheuerkaufPeak::TheuerkaufPeak(const Param &pos, const Param &vol, const Param &sigma, const Param &tl, const Param &tr,
                                const Param &sh, const Param &sw)
     : fPos{pos}, fVol{vol}, fSigma{sigma}, fTL{tl ? tl : Param::Fixed(0.0)}, fTR{tr ? tr : Param::Fixed(0.0)},
-      fSH{sh ? sh : Param::Fixed(0.0)}, fSW{sw ? sw : Param::Fixed(1.0)}, fHasLeftTail{tl},
-      fHasRightTail{tr}, fHasStep{sh}, fFunc{nullptr}, fCachedNorm{std::numeric_limits<double>::quiet_NaN()},
+      fSH{sh ? sh : Param::Fixed(0.0)}, fSW{sw ? sw : Param::Fixed(1.0)}, fHasLeftTail{tl}, fHasRightTail{tr},
+      fHasStep{sh}, fFunc{nullptr}, fCachedNorm{std::numeric_limits<double>::quiet_NaN()},
       fCachedSigma{std::numeric_limits<double>::quiet_NaN()}, fCachedTL{std::numeric_limits<double>::quiet_NaN()},
       fCachedTR{std::numeric_limits<double>::quiet_NaN()} {}
 

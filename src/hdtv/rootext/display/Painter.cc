@@ -35,9 +35,9 @@ namespace Display {
 Painter::Painter()
     : fWidth{1}, fHeight{1}, fXBase{0}, fYBase{0}, fXZoom{0.01}, fYZoom{0.01}, fXVisibleRegion{100.0},
       fYVisibleRegion{100.0}, fXOffset{0.0}, fYOffset{0.0}, fLogScale{false}, fUseNorm{false}, fViewMode{kVMHollow},
-      fDrawable{static_cast<Drawable_t>(-1)}, fAxisGC{static_cast<GContext_t>(-1)}, fClearGC{static_cast<GContext_t>(
-                                                                                        -1)},
-      fFont{gClient->GetResourcePool()->GetDefaultFont()}, fFontStruct{fFont->GetFontStruct()} {}
+      fDrawable{static_cast<Drawable_t>(-1)}, fAxisGC{static_cast<GContext_t>(-1)},
+      fClearGC{static_cast<GContext_t>(-1)}, fFont{gClient->GetResourcePool()->GetDefaultFont()},
+      fFontStruct{fFont->GetFontStruct()} {}
 
 void Painter::DrawFunction(DisplayFunc *dFunc, int x1, int x2) {
   //! Function to draw a DisplayFunc object

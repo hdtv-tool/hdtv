@@ -69,7 +69,7 @@ static void guessdatatype(MFILE *mat, uint32_t pos) {
     n3 += buf[i + 2];
     n4 += buf[i + 3];
 /* consider floating point32_t number, if within 2^-3 to 2^20 */
-#define GETEXP(_n, _bits) (((_n)&0x7fff) >> (15 - (_bits)))
+#define GETEXP(_n, _bits) (((_n) & 0x7fff) >> (15 - (_bits)))
 #define MINEXP (-3)
 #define MAXEXP (20)
     tli = (buf[i + 3] << 8) + buf[i + 2];

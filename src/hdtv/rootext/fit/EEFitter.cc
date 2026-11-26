@@ -48,9 +48,8 @@ EEPeak::EEPeak(const Param &pos, const Param &amp, const Param &sigma1, const Pa
 
 EEPeak::EEPeak(const EEPeak &src)
     : fPos{src.fPos}, fAmp{src.fAmp}, fSigma1{src.fSigma1}, fSigma2{src.fSigma2}, fEta{src.fEta}, fGamma{src.fGamma},
-      fVol{src.fVol}, fVolError{src.fVolError}, fFunc{src.fFunc}, fPeakFunc{nullptr}
-// Do not copy the fPeakFunc pointer, it will be
-// generated when needed.
+      fVol{src.fVol}, fVolError{src.fVolError}, fFunc{src.fFunc},
+      fPeakFunc{nullptr} // Do not copy the fPeakFunc pointer, it will be generated when needed.
 {}
 
 EEPeak &EEPeak::operator=(const EEPeak &src) {

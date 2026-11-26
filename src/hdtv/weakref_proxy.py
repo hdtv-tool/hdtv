@@ -91,9 +91,9 @@ class weakref:
 
     def __bool__(self):
         if self._ref():
-            return 1
+            return True
         else:
-            return 0
+            return False
 
     def __eq__(self, other):
         if isinstance(other, weakref):

@@ -53,7 +53,7 @@ PolyBg::PolyBg(const PolyBg &src)
 
   if (src.fFunc != nullptr) {
     fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, src.fFunc->GetXmin(),
-                                  src.fFunc->GetXmax(), fnParams, "PolyBg", "_Eval");
+                                  src.fFunc->GetXmax(), fnParams);
 
     for (int i = 0; i < fnParams; ++i) {
       fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -77,7 +77,7 @@ PolyBg &PolyBg::operator=(const PolyBg &src) {
   fIntegrate = src.fIntegrate, fLikelihood = src.fLikelihood;
 
   fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, src.fFunc->GetXmin(),
-                                src.fFunc->GetXmax(), fnParams + 1, "PolyBg", "_Eval");
+                                src.fFunc->GetXmax(), fnParams + 1);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -96,8 +96,7 @@ void PolyBg::Fit(TH1 &hist) {
 
   // Create function to be used for fitting
   // Note that a polynomial of degree N has N+1 parameters
-  TF1 fitFunc(GetFuncUniqueName("b_fit", this).c_str(), this, &PolyBg::_EvalRegion, GetMin(), GetMax(), fnParams + 1,
-              "PolyBg", "_EvalRegion");
+  TF1 fitFunc(GetFuncUniqueName("b_fit", this).c_str(), this, &PolyBg::_EvalRegion, GetMin(), GetMax(), fnParams + 1);
 
   for (int i = 0; i < fnParams; ++i) {
     fitFunc.SetParameter(i, 0.0);
@@ -125,8 +124,8 @@ void PolyBg::Fit(TH1 &hist) {
   }
 
   // Copy parameters to new function
-  fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, GetMin(), GetMax(),
-                                fnParams, "PolyBg", "_Eval");
+  fFunc =
+      std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, GetMin(), GetMax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, fitFunc.GetParameter(i));
@@ -145,8 +144,8 @@ bool PolyBg::Restore(const TArrayD &values, const TArrayD &errors, double ChiSqu
   }
 
   // Copy parameters to new function
-  fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, GetMin(), GetMax(),
-                                fnParams, "PolyBg", "_Eval");
+  fFunc =
+      std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &PolyBg::_Eval, GetMin(), GetMax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, values[i]);

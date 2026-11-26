@@ -52,7 +52,7 @@ ExpBg::ExpBg(const ExpBg &src)
 
   if (src.fFunc != nullptr) {
     fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, src.fFunc->GetXmin(),
-                                  src.fFunc->GetXmax(), fnParams, "ExpBg", "_Eval");
+                                  src.fFunc->GetXmax(), fnParams);
 
     for (int i = 0; i < fnParams; ++i) {
       fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -76,7 +76,7 @@ ExpBg &ExpBg::operator=(const ExpBg &src) {
   fIntegrate = src.fIntegrate, fLikelihood = src.fLikelihood;
 
   fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, src.fFunc->GetXmin(),
-                                src.fFunc->GetXmax(), fnParams, "ExpBg", "_Eval");
+                                src.fFunc->GetXmax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -94,8 +94,7 @@ void ExpBg::Fit(TH1 &hist) {
   }
   // Create function to be used for fitting
   // Note that a polynomial of degree N has N+1 parameters
-  TF1 fitFunc(GetFuncUniqueName("b_fit", this).c_str(), this, &ExpBg::_EvalRegion, GetMin(), GetMax(), fnParams,
-              "ExpBg", "_EvalRegion");
+  TF1 fitFunc(GetFuncUniqueName("b_fit", this).c_str(), this, &ExpBg::_EvalRegion, GetMin(), GetMax(), fnParams);
 
   // Estimate start parameters p[0] and p[1]
   std::list<double>::iterator iter;
@@ -140,8 +139,8 @@ void ExpBg::Fit(TH1 &hist) {
   }
 
   // Copy parameters to new function
-  fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, GetMin(), GetMax(), fnParams,
-                                "ExpBg", "_Eval");
+  fFunc =
+      std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, GetMin(), GetMax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, fitFunc.GetParameter(i));
@@ -160,8 +159,8 @@ bool ExpBg::Restore(const TArrayD &values, const TArrayD &errors, double ChiSqua
   }
 
   // Copy parameters to new function
-  fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, GetMin(), GetMax(), fnParams,
-                                "ExpBg", "_Eval");
+  fFunc =
+      std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &ExpBg::_Eval, GetMin(), GetMax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, values[i]);

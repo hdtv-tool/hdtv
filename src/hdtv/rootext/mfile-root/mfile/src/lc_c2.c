@@ -125,7 +125,7 @@ int32_t lc2_compress(char *dest, int32_t *src, int32_t num) {
   return (dest - p);
 }
 
-#define decode(i) (((i)&1) ? ~((uint32_t)(i) >> 1) : ((uint32_t)(i) >> 1))
+#define decode(i) (((i) & 1) ? ~((uint32_t)(i) >> 1) : ((uint32_t)(i) >> 1))
 
 #define bitextract(i, p, l) (((i) >> p) & ((1 << (l)) - 1))
 

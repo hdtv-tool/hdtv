@@ -51,7 +51,7 @@
 //! A ``virtual matrix'', i.e. a matrix that is not necessarily stored in memory
 class VMatrix {
 public:
-  VMatrix() : fFail(false){};
+  VMatrix() : fFail(false) {};
   virtual ~VMatrix() = default;
 
   void AddCutRegion(int c1, int c2) { AddRegion(fCutRegions, c1, c2); }

@@ -47,8 +47,8 @@ namespace Fit {
 TheuerkaufPeak::TheuerkaufPeak(const Param &pos, const Param &vol, const Param &sigma, const Param &tl, const Param &tr,
                                const Param &sh, const Param &sw)
     : fPos{pos}, fVol{vol}, fSigma{sigma}, fTL{tl ? tl : Param::Fixed(0.0)}, fTR{tr ? tr : Param::Fixed(0.0)},
-      fSH{sh ? sh : Param::Fixed(0.0)}, fSW{sw ? sw : Param::Fixed(1.0)}, fHasLeftTail{tl},
-      fHasRightTail{tr}, fHasStep{sh}, fFunc{nullptr}, fCachedNorm{std::numeric_limits<double>::quiet_NaN()},
+      fSH{sh ? sh : Param::Fixed(0.0)}, fSW{sw ? sw : Param::Fixed(1.0)}, fHasLeftTail{tl}, fHasRightTail{tr},
+      fHasStep{sh}, fFunc{nullptr}, fCachedNorm{std::numeric_limits<double>::quiet_NaN()},
       fCachedSigma{std::numeric_limits<double>::quiet_NaN()}, fCachedTL{std::numeric_limits<double>::quiet_NaN()},
       fCachedTR{std::numeric_limits<double>::quiet_NaN()} {}
 
@@ -115,7 +115,7 @@ TF1 *TheuerkaufPeak::GetPeakFunc() {
   int numParams = fFunc->GetNpar();
 
   fPeakFunc = std::make_unique<TF1>(GetFuncUniqueName("peak", this).c_str(), this, &TheuerkaufPeak::EvalNoStep, min,
-                                    max, numParams, "TheuerkaufPeak", "EvalNoStep");
+                                    max, numParams);
 
   for (int i = 0; i < numParams; i++) {
     fPeakFunc->SetParameter(i, fFunc->GetParameter(i));
@@ -265,7 +265,7 @@ TF1 *TheuerkaufFitter::GetBgFunc() {
   }
 
   fBgFunc = std::make_unique<TF1>(GetFuncUniqueName("fitbg", this).c_str(), this, &TheuerkaufFitter::EvalBg, min, max,
-                                  fNumParams, "TheuerkaufFitter", "EvalBg");
+                                  fNumParams);
 
   for (int i = 0; i < fNumParams; i++) {
     fBgFunc->SetParameter(i, fSumFunc->GetParameter(i));
@@ -310,7 +310,7 @@ void TheuerkaufFitter::_Fit(TH1 &hist) {
 
   // Create fit function
   fSumFunc = std::make_unique<TF1>(GetFuncUniqueName("f", this).c_str(), this, &TheuerkaufFitter::Eval, fMin, fMax,
-                                   fNumParams, "TheuerkaufFitter", "Eval");
+                                   fNumParams);
 
   // *** Initial parameter estimation ***
   int b1 = hist.FindBin(fMin);
@@ -572,7 +572,7 @@ bool TheuerkaufFitter::Restore(const TArrayD &bgPolValues, const TArrayD &bgPolE
 void TheuerkaufFitter::_Restore(double ChiSquare) {
   // Create fit function
   fSumFunc = std::make_unique<TF1>(GetFuncUniqueName("f", this).c_str(), this, &TheuerkaufFitter::Eval, fMin, fMax,
-                                   fNumParams, "TheuerkaufFitter", "Eval");
+                                   fNumParams);
 
   for (auto &peak : fPeaks) {
     peak.SetSumFunc(fSumFunc.get());

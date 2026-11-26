@@ -59,7 +59,7 @@ InterpolationBg::InterpolationBg(const InterpolationBg &src)
   fInter.SetData(x, y);
   if (src.fFunc != nullptr) {
     fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &InterpolationBg::_Eval,
-                                  src.fFunc->GetXmin(), src.fFunc->GetXmax(), fnParams, "InterpolationBg", "_Eval");
+                                  src.fFunc->GetXmin(), src.fFunc->GetXmax(), fnParams);
 
     for (int i = 0; i < fnParams; ++i) {
       fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -83,7 +83,7 @@ InterpolationBg &InterpolationBg::operator=(const InterpolationBg &src) {
   fInter = src.fInter;
 
   fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &InterpolationBg::_Eval,
-                                src.fFunc->GetXmin(), src.fFunc->GetXmax(), fnParams, "InterpolationBg", "_Eval");
+                                src.fFunc->GetXmin(), src.fFunc->GetXmax(), fnParams);
 
   for (int i = 0; i < fnParams; ++i) {
     fFunc->SetParameter(i, src.fFunc->GetParameter(i));
@@ -159,7 +159,7 @@ void InterpolationBg::Fit(TH1 &hist) {
   // Interpolate the background regions
   fInter.SetData(x, y);
   fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &InterpolationBg::_Eval, x[0],
-                                x[fBgRegions.size() - 1], fnParams, "InterpolationBg", "_Eval");
+                                x[fBgRegions.size() - 1], fnParams);
 
   fFunc->SetChisquare(0.);
   unsigned int index = 0;
@@ -191,7 +191,7 @@ bool InterpolationBg::Restore(const TArrayD &values, const TArrayD &errors, doub
 
   fInter.SetData(x, y);
   fFunc = std::make_unique<TF1>(GetFuncUniqueName("b", this).c_str(), this, &InterpolationBg::_Eval, x[0],
-                                x[fBgRegions.size() - 1], fnParams, "InterpolationBg", "_Eval");
+                                x[fBgRegions.size() - 1], fnParams);
 
   fChisquare = ChiSquare;
   fFunc->SetChisquare(0.);

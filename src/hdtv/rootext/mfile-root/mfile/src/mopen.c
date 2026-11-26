@@ -92,7 +92,7 @@ static void openmatfile(MFILE *mat, const char *name, const char *mode) {
 MFILE *mopen(const char *name, const char *mode) {
 
   MFILE *mat;
-  char *fmt;
+  const char *fmt;
 
   if (name == NULL || mode == NULL)
     return NULL;
